@@ -1,0 +1,296 @@
+nombre,categoria,kcal_100g,proteinas_100g,carbohidratos_100g,grasas_100g,fibra_100g,contiene_gluten,contiene_lactosa,contiene_frutos_secos,es_vegetariano,es_vegano
+Pechuga de pollo,carne,110,23.0,0.0,2.5,0.0,False,False,False,False,False
+Muslo de pollo,carne,177,18.0,0.0,11.0,0.0,False,False,False,False,False
+Contramuslo de pollo,carne,192,17.0,0.0,13.5,0.0,False,False,False,False,False
+Pollo entero,carne,167,18.5,0.0,10.5,0.0,False,False,False,False,False
+Pechuga de pavo,carne,104,22.0,0.0,1.5,0.0,False,False,False,False,False
+Muslo de pavo,carne,148,19.0,0.0,8.0,0.0,False,False,False,False,False
+Ternera magra,carne,158,22.0,0.0,7.5,0.0,False,False,False,False,False
+Ternera picada,carne,235,17.0,0.0,18.0,0.0,False,False,False,False,False
+Solomillo de ternera,carne,136,21.0,0.0,5.5,0.0,False,False,False,False,False
+Lomo de cerdo,carne,182,20.0,0.0,11.0,0.0,False,False,False,False,False
+Solomillo de cerdo,carne,145,21.0,0.0,6.0,0.0,False,False,False,False,False
+Chuleta de cerdo,carne,215,18.0,0.0,16.0,0.0,False,False,False,False,False
+Cerdo picado,carne,263,16.0,0.0,22.0,0.0,False,False,False,False,False
+Costillas de cerdo,carne,277,15.0,0.0,24.0,0.0,False,False,False,False,False
+Cordero pierna,carne,209,17.0,0.0,16.0,0.0,False,False,False,False,False
+Cordero chuleta,carne,294,15.0,0.0,26.0,0.0,False,False,False,False,False
+Conejo,carne,136,21.0,0.0,5.5,0.0,False,False,False,False,False
+Pato,carne,337,19.0,0.0,28.0,0.0,False,False,False,False,False
+Higado de ternera,carne,135,20.0,4.0,4.0,0.0,False,False,False,False,False
+Higado de pollo,carne,119,18.5,0.5,4.5,0.0,False,False,False,False,False
+Salmon fresco,pescado,208,20.0,0.0,13.0,0.0,False,False,False,False,False
+Salmon ahumado,pescado,172,18.0,0.0,11.0,0.0,False,False,False,False,False
+Merluza,pescado,79,17.0,0.0,1.0,0.0,False,False,False,False,False
+Atun fresco,pescado,144,23.0,0.0,5.0,0.0,False,False,False,False,False
+Atun en lata al natural,pescado,103,25.0,0.0,1.0,0.0,False,False,False,False,False
+Atun en lata en aceite,pescado,198,23.0,0.0,12.0,0.0,False,False,False,False,False
+Sardinas en conserva,pescado,208,18.0,0.0,14.0,0.0,False,False,False,False,False
+Sardinas frescas,pescado,169,19.5,0.0,10.0,0.0,False,False,False,False,False
+Bacalao fresco,pescado,82,18.0,0.0,0.7,0.0,False,False,False,False,False
+Bacalao desalado,pescado,95,21.0,0.0,0.9,0.0,False,False,False,False,False
+Dorada,pescado,96,18.0,0.0,2.5,0.0,False,False,False,False,False
+Lubina,pescado,98,18.5,0.0,3.0,0.0,False,False,False,False,False
+Rape,pescado,73,16.0,0.0,0.8,0.0,False,False,False,False,False
+Trucha,pescado,119,18.0,0.0,5.0,0.0,False,False,False,False,False
+Caballa,pescado,205,19.0,0.0,14.0,0.0,False,False,False,False,False
+Boquerones frescos,pescado,96,17.0,0.0,3.5,0.0,False,False,False,False,False
+Boquerones en vinagre,pescado,150,17.0,0.5,9.0,0.0,False,False,False,False,False
+Anchoas en conserva,pescado,210,28.0,0.0,11.0,0.0,False,False,False,False,False
+Pez espada,pescado,121,19.0,0.0,5.0,0.0,False,False,False,False,False
+Lenguado,pescado,84,17.5,0.0,1.5,0.0,False,False,False,False,False
+Gambas,marisco,85,18.0,0.0,1.0,0.0,False,False,False,False,False
+Langostinos,marisco,90,19.0,0.0,1.2,0.0,False,False,False,False,False
+Mejillones cocidos,marisco,84,12.0,3.5,2.2,0.0,False,False,False,False,False
+Almejas,marisco,73,12.0,2.7,1.0,0.0,False,False,False,False,False
+Calamar,marisco,92,15.6,3.1,1.7,0.0,False,False,False,False,False
+Pulpo cocido,marisco,82,15.0,2.2,1.0,0.0,False,False,False,False,False
+Sepia,marisco,79,16.0,0.5,1.0,0.0,False,False,False,False,False
+Berberechos en conserva,marisco,76,13.0,3.0,1.0,0.0,False,False,False,False,False
+Huevo entero,huevo,155,13.0,1.0,11.0,0.0,False,False,False,True,False
+Clara de huevo,huevo,52,11.0,0.7,0.2,0.0,False,False,False,True,False
+Yema de huevo,huevo,322,16.0,1.0,27.0,0.0,False,False,False,True,False
+Huevo duro,huevo,155,12.5,1.1,10.6,0.0,False,False,False,True,False
+Tortilla francesa,huevo,185,11.5,0.5,15.0,0.0,False,False,False,True,False
+Leche entera,lacteo,65,3.2,4.8,3.5,0.0,False,True,False,True,False
+Leche semidesnatada,lacteo,46,3.3,4.9,1.5,0.0,False,True,False,True,False
+Leche desnatada,lacteo,36,3.4,5.0,0.2,0.0,False,True,False,True,False
+Leche sin lactosa entera,lacteo,65,3.2,4.8,3.5,0.0,False,False,False,True,False
+Leche sin lactosa desnatada,lacteo,36,3.4,5.0,0.2,0.0,False,False,False,True,False
+Bebida de avena,bebida vegetal,45,1.0,7.5,1.5,0.8,True,False,False,True,True
+Bebida de soja,bebida vegetal,33,3.0,2.5,1.8,0.0,False,False,False,True,True
+Bebida de almendras,bebida vegetal,24,0.9,3.0,1.1,0.4,False,False,True,True,True
+Bebida de arroz,bebida vegetal,47,0.3,9.5,1.0,0.1,False,False,False,True,True
+Bebida de coco,bebida vegetal,19,0.2,2.8,0.9,0.0,False,False,False,True,True
+Yogur natural entero,lacteo,61,3.5,4.7,3.3,0.0,False,True,False,True,False
+Yogur natural desnatado,lacteo,38,4.5,5.5,0.2,0.0,False,True,False,True,False
+Yogur griego natural,lacteo,133,5.0,4.0,10.0,0.0,False,True,False,True,False
+Yogur griego desnatado,lacteo,57,9.0,4.0,0.3,0.0,False,True,False,True,False
+Kefir natural,lacteo,63,3.2,4.5,3.5,0.0,False,True,False,True,False
+Queso fresco Burgos,lacteo,98,10.0,2.5,5.5,0.0,False,True,False,True,False
+Queso manchego curado,lacteo,392,27.0,0.5,32.0,0.0,False,True,False,True,False
+Queso manchego semicurado,lacteo,358,24.0,0.5,29.0,0.0,False,True,False,True,False
+Queso mozzarella,lacteo,280,18.0,2.2,22.0,0.0,False,True,False,True,False
+Queso cottage,lacteo,98,11.0,3.4,4.3,0.0,False,True,False,True,False
+Requeson,lacteo,74,6.5,2.8,4.0,0.0,False,True,False,True,False
+Queso parmesano,lacteo,431,38.0,0.0,29.0,0.0,False,True,False,True,False
+Queso brie,lacteo,334,21.0,0.5,28.0,0.0,False,True,False,True,False
+Queso feta,lacteo,264,14.0,4.0,21.0,0.0,False,True,False,True,False
+Nata para cocinar 18%,lacteo,195,2.7,3.5,19.0,0.0,False,True,False,True,False
+Arroz blanco cocido,cereal_comida,130,2.7,28.0,0.3,0.4,False,False,False,True,True
+Arroz integral cocido,cereal_comida,112,2.6,23.0,0.9,1.8,False,False,False,True,True
+Arroz basmati cocido,cereal_comida,121,2.5,26.0,0.3,0.4,False,False,False,True,True
+Arroz salvaje cocido,cereal_comida,101,3.9,21.3,0.3,1.8,False,False,False,True,True
+Pasta blanca cocida,cereal_comida,157,5.8,30.0,1.1,1.8,True,False,False,True,True
+Pasta integral cocida,cereal_comida,149,5.6,27.0,1.2,3.5,True,False,False,True,True
+Macarrones cocidos,cereal_comida,158,5.8,31.0,1.0,1.8,True,False,False,True,True
+Espaguetis cocidos,cereal_comida,157,5.8,30.0,1.1,1.8,True,False,False,True,True
+Penne cocidos,cereal_comida,158,5.8,31.0,1.0,1.8,True,False,False,True,True
+Pan blanco,cereal_comida,265,8.0,50.0,3.2,2.7,True,False,False,True,True
+Pan integral,cereal_comida,247,9.0,43.0,3.5,6.5,True,False,False,True,True
+Pan de molde blanco,cereal_desayuno,270,8.5,48.0,4.5,2.5,True,False,False,True,True
+Pan de molde integral,cereal_desayuno,245,9.5,42.0,4.0,6.0,True,False,False,True,True
+Pan de centeno,cereal_comida,259,8.5,48.0,3.3,7.9,True,False,False,True,True
+Pan pita,cereal_comida,275,9.1,55.0,1.2,2.2,True,False,False,True,True
+Tostadas,cereal_desayuno,378,12.0,72.0,4.2,4.0,True,False,False,True,True
+Avena en copos,cereal_desayuno,389,17.0,66.0,7.0,10.6,True,False,False,True,True
+Quinoa cocida,cereal_comida,120,4.4,21.0,1.9,2.8,False,False,False,True,True
+Cuscus cocido,cereal_comida,112,3.8,23.0,0.2,1.4,True,False,False,True,True
+Maiz dulce cocido,cereal_comida,96,3.4,19.0,1.5,2.7,False,False,False,True,True
+Tortita de arroz,cereal_desayuno,385,7.5,81.0,3.0,1.5,False,False,False,True,True
+Mijo cocido,cereal_comida,119,3.5,23.0,1.0,1.3,False,False,False,True,True
+Trigo sarraceno cocido,cereal_comida,92,3.4,20.0,0.6,2.7,False,False,False,True,True
+Patata cocida,verdura,87,1.9,20.0,0.1,1.8,False,False,False,True,True
+Patata asada,verdura,93,2.5,21.0,0.1,2.2,False,False,False,True,True
+Patata frita en aceite,verdura,312,3.4,35.0,17.0,3.2,False,False,False,True,True
+Boniato cocido,verdura,90,2.0,21.0,0.1,3.0,False,False,False,True,True
+Brocoli,verdura,34,2.8,6.6,0.4,2.6,False,False,False,True,True
+Coliflor,verdura,25,1.9,5.0,0.3,2.0,False,False,False,True,True
+Col repollo,verdura,27,1.3,6.1,0.1,2.5,False,False,False,True,True
+Coles de Bruselas,verdura,43,3.4,8.9,0.3,3.8,False,False,False,True,True
+Espinacas crudas,verdura,23,2.9,3.6,0.4,2.2,False,False,False,True,True
+Espinacas cocidas,verdura,20,2.5,3.0,0.3,2.0,False,False,False,True,True
+Lechuga,verdura,15,1.4,2.2,0.2,1.3,False,False,False,True,True
+Rucula,verdura,25,2.6,3.7,0.7,1.6,False,False,False,True,True
+Canonigos,verdura,21,2.0,3.6,0.4,1.8,False,False,False,True,True
+Tomate,verdura,18,0.9,3.5,0.2,1.2,False,False,False,True,True
+Tomate cherry,verdura,18,0.9,3.8,0.2,1.2,False,False,False,True,True
+Tomate triturado,verdura,24,1.2,4.5,0.2,1.5,False,False,False,True,True
+Tomate seco,verdura,258,14.1,55.8,3.0,12.3,False,False,False,True,True
+Pimiento rojo,verdura,31,1.0,6.0,0.3,2.1,False,False,False,True,True
+Pimiento verde,verdura,20,0.9,4.0,0.2,1.5,False,False,False,True,True
+Pimiento amarillo,verdura,27,1.0,6.3,0.2,0.9,False,False,False,True,True
+Cebolla,verdura,40,1.1,9.3,0.1,1.7,False,False,False,True,True
+Cebolla morada,verdura,42,1.2,9.8,0.1,1.8,False,False,False,True,True
+Cebolleta,verdura,32,1.8,7.3,0.2,2.6,False,False,False,True,True
+Ajo,condimento,149,6.4,33.0,0.5,2.1,False,False,False,True,True
+Puerro,verdura,61,1.5,14.0,0.3,1.8,False,False,False,True,True
+Zanahoria,verdura,41,0.9,9.6,0.2,2.8,False,False,False,True,True
+Calabacin,verdura,17,1.2,3.1,0.2,1.0,False,False,False,True,True
+Berenjena,verdura,25,1.0,5.9,0.2,3.0,False,False,False,True,True
+Pepino,verdura,15,0.7,3.6,0.1,0.5,False,False,False,True,True
+Apio,verdura,16,0.7,3.0,0.2,1.6,False,False,False,True,True
+Champinones,verdura,22,3.1,3.3,0.3,1.0,False,False,False,True,True
+Setas portobello,verdura,29,2.9,4.4,0.4,1.2,False,False,False,True,True
+Setas shiitake,verdura,34,2.2,6.8,0.5,2.5,False,False,False,True,True
+Acelgas,verdura,19,1.8,3.7,0.2,2.1,False,False,False,True,True
+Espinacas bebe,verdura,22,2.7,3.6,0.4,2.2,False,False,False,True,True
+Alcachofas,verdura,47,3.3,10.5,0.2,5.4,False,False,False,True,True
+Judias verdes,verdura,31,1.8,7.0,0.1,3.4,False,False,False,True,True
+Guisantes frescos,verdura,81,5.4,14.5,0.4,5.5,False,False,False,True,True
+Maiz en lata,verdura,86,2.7,18.0,1.0,1.8,False,False,False,True,True
+Remolacha cocida,verdura,43,1.7,9.6,0.2,2.8,False,False,False,True,True
+Esparragos,verdura,20,2.2,3.9,0.1,2.1,False,False,False,True,True
+Esparragos en conserva,verdura,18,2.0,3.5,0.1,1.9,False,False,False,True,True
+Nabo,verdura,28,0.9,6.4,0.1,1.8,False,False,False,True,True
+Rabano,verdura,16,0.7,3.4,0.1,1.6,False,False,False,True,True
+Endibia,verdura,17,1.0,3.6,0.1,1.5,False,False,False,True,True
+Hinojo,verdura,31,1.2,7.3,0.2,3.1,False,False,False,True,True
+Aguacate,grasa vegetal,160,2.0,9.0,15.0,7.0,False,False,False,True,True
+Aceitunas negras,grasa vegetal,115,0.8,6.3,10.9,3.2,False,False,False,True,True
+Aceitunas verdes,grasa vegetal,145,1.0,3.8,15.3,2.9,False,False,False,True,True
+Lentejas cocidas,legumbre,116,9.0,20.0,0.4,7.9,False,False,False,True,True
+Lentejas rojas cocidas,legumbre,127,9.0,23.0,0.4,4.9,False,False,False,True,True
+Garbanzos cocidos,legumbre,164,8.9,27.0,2.6,7.6,False,False,False,True,True
+Alubias blancas cocidas,legumbre,127,8.7,22.0,0.5,6.4,False,False,False,True,True
+Alubias negras cocidas,legumbre,132,8.9,24.0,0.5,8.7,False,False,False,True,True
+Alubias rojas cocidas,legumbre,127,8.7,22.5,0.5,6.8,False,False,False,True,True
+Habas cocidas,legumbre,110,7.9,19.0,0.4,5.4,False,False,False,True,True
+Soja cocida,legumbre,173,16.6,9.9,9.0,6.0,False,False,False,True,True
+Tofu firme,legumbre,76,8.0,2.0,4.5,0.3,False,False,False,True,True
+Tofu sedoso,legumbre,55,4.8,2.0,2.7,0.1,False,False,False,True,True
+Tofu ahumado,legumbre,140,13.5,2.5,9.0,0.0,False,False,False,True,True
+Edamame,legumbre,122,11.0,10.0,5.2,5.2,False,False,False,True,True
+Tempeh,legumbre,193,19.0,9.4,11.0,0.0,False,False,False,True,True
+Hummus,legumbre,177,8.0,14.0,10.0,6.0,False,False,False,True,True
+Platano,fruta,89,1.1,23.0,0.3,2.6,False,False,False,True,True
+Manzana,fruta,52,0.3,14.0,0.2,2.4,False,False,False,True,True
+Naranja,fruta,47,0.9,12.0,0.1,2.4,False,False,False,True,True
+Mandarina,fruta,53,0.8,13.0,0.3,1.8,False,False,False,True,True
+Limon,fruta,29,1.1,9.0,0.3,2.8,False,False,False,True,True
+Fresas,fruta,32,0.7,7.7,0.3,2.0,False,False,False,True,True
+Frambuesas,fruta,52,1.2,11.9,0.7,6.5,False,False,False,True,True
+Arandanos,fruta,57,0.7,14.0,0.3,2.4,False,False,False,True,True
+Kiwi,fruta,61,1.1,15.0,0.5,3.0,False,False,False,True,True
+Pera,fruta,57,0.4,15.0,0.1,3.1,False,False,False,True,True
+Melocoton,fruta,39,0.9,9.5,0.3,1.5,False,False,False,True,True
+Nectarina,fruta,44,1.1,10.5,0.3,1.7,False,False,False,True,True
+Uvas,fruta,69,0.6,18.0,0.2,0.9,False,False,False,True,True
+Sandia,fruta,30,0.6,7.6,0.2,0.4,False,False,False,True,True
+Melon,fruta,34,0.8,8.1,0.2,0.9,False,False,False,True,True
+Mango,fruta,60,0.8,15.0,0.4,1.6,False,False,False,True,True
+Pina,fruta,50,0.5,13.0,0.1,1.4,False,False,False,True,True
+Cerezas,fruta,63,1.1,16.0,0.2,2.1,False,False,False,True,True
+Ciruelas,fruta,46,0.7,11.4,0.3,1.4,False,False,False,True,True
+Higos,fruta,74,0.8,19.2,0.3,2.9,False,False,False,True,True
+Granada,fruta,83,1.7,18.7,1.2,4.0,False,False,False,True,True
+Papaya,fruta,43,0.5,11.0,0.3,1.7,False,False,False,True,True
+Aceite de oliva virgen extra,grasa,884,0.0,0.0,100.0,0.0,False,False,False,True,True
+Aceite de girasol,grasa,884,0.0,0.0,100.0,0.0,False,False,False,True,True
+Aceite de coco,grasa,862,0.0,0.0,100.0,0.0,False,False,False,True,True
+Mantequilla,grasa,717,0.9,0.1,81.0,0.0,False,True,False,True,False
+Mantequilla sin sal,grasa,717,0.9,0.1,81.0,0.0,False,True,False,True,False
+Margarina vegetal,grasa,720,0.2,0.9,80.0,0.0,False,False,False,True,True
+Almendras,frutos secos,579,21.0,22.0,50.0,12.5,False,False,True,True,True
+Nueces,frutos secos,654,15.0,14.0,65.0,6.7,False,False,True,True,True
+Cacahuetes,frutos secos,567,26.0,16.0,49.0,8.5,False,False,True,True,True
+Pistachos,frutos secos,562,20.0,28.0,45.0,10.6,False,False,True,True,True
+Avellanas,frutos secos,628,15.0,17.0,61.0,9.7,False,False,True,True,True
+Anacardos,frutos secos,553,18.0,30.0,44.0,3.3,False,False,True,True,True
+Nueces de Brasil,frutos secos,656,14.0,12.0,66.0,7.5,False,False,True,True,True
+Mantequilla de cacahuete,frutos secos,588,25.0,20.0,50.0,6.0,False,False,True,True,True
+Semillas de chia,semillas,486,17.0,42.0,31.0,34.0,False,False,False,True,True
+Semillas de lino,semillas,534,18.0,29.0,42.0,27.0,False,False,False,True,True
+Semillas de girasol,semillas,584,21.0,20.0,51.0,8.6,False,False,False,True,True
+Semillas de calabaza,semillas,559,30.0,11.0,49.0,6.0,False,False,False,True,True
+Semillas de sesamo,semillas,573,17.0,23.0,50.0,11.8,False,False,False,True,True
+Jamon serrano,embutido,241,31.0,0.0,13.0,0.0,False,False,False,False,False
+Jamon iberico,embutido,375,28.0,0.0,29.0,0.0,False,False,False,False,False
+Jamon cocido extra,embutido,107,17.0,1.2,4.0,0.0,False,False,False,False,False
+Pechuga de pavo fiambre,embutido,109,19.0,1.5,3.0,0.0,False,False,False,False,False
+Chorizo,embutido,455,22.0,2.0,40.0,0.0,False,False,False,False,False
+Salchichon,embutido,430,21.0,1.0,38.0,0.0,False,False,False,False,False
+Mortadela,embutido,311,13.0,2.0,28.0,0.0,False,False,False,False,False
+Salchicha de pavo,embutido,140,14.0,2.5,8.5,0.0,False,False,False,False,False
+Chocolate negro 70,dulce,598,8.0,46.0,43.0,10.9,False,False,False,True,True
+Chocolate con leche,dulce,535,7.5,57.0,32.0,1.5,False,True,False,True,False
+Miel,dulce,304,0.3,82.0,0.0,0.2,False,False,False,True,False
+Mermelada de fresa,dulce,250,0.4,65.0,0.1,0.9,False,False,False,True,True
+Proteina de suero whey,suplemento,380,80.0,6.0,4.0,0.0,False,True,False,True,False
+Proteina vegana guisante,suplemento,370,75.0,8.0,5.0,3.0,False,False,False,True,True
+Caldo de verduras,caldo,8,0.3,1.5,0.1,0.0,False,False,False,True,True
+Caldo de pollo,caldo,14,1.5,0.5,0.7,0.0,False,False,False,False,False
+Caldo de pescado,caldo,12,1.8,0.3,0.4,0.0,False,False,False,False,False
+Tomate frito,conserva,65,1.5,8.0,3.5,1.8,False,False,False,True,True
+Salsa de tomate casera,conserva,45,1.8,8.5,1.0,1.5,False,False,False,True,True
+Salsa de soja,condimento,60,10.0,5.6,0.1,0.8,True,False,False,True,True
+Salsa de soja sin gluten,condimento,58,9.5,5.5,0.1,0.8,False,False,False,True,True
+Vinagre de manzana,condimento,22,0.0,0.9,0.0,0.0,False,False,False,True,True
+Vinagre de vino blanco,condimento,18,0.0,0.4,0.0,0.0,False,False,False,True,True
+Mostaza,condimento,66,4.4,4.9,4.0,3.3,False,False,False,True,True
+Ketchup,condimento,112,1.4,26.0,0.1,0.4,False,False,False,True,True
+Mayonesa,condimento,680,1.3,0.6,75.0,0.0,False,False,False,True,False
+Tortita de maiz,cereal_desayuno,383,7.2,80.0,3.5,1.2,False,False,False,True,True
+Pan de centeno integral,cereal_comida,241,8.5,45.0,2.5,9.0,True,False,False,True,True
+Granola sin azucar,cereal_desayuno,450,11.0,55.0,18.0,7.0,True,False,True,True,True
+Clara de huevo pasteurizada,huevo,50,10.8,0.6,0.1,0.0,False,False,False,True,False
+Huevo cocotte,huevo,155,13.0,1.0,11.0,0.0,False,False,False,True,False
+Pechuga de pollo a la plancha,carne,165,31.0,0.0,3.6,0.0,False,False,False,False,False
+Pavo a la plancha,carne,150,29.0,0.0,3.0,0.0,False,False,False,False,False
+Atun al natural escurrido,pescado,116,25.5,0.0,1.2,0.0,False,False,False,False,False
+Salmon al horno,pescado,206,20.0,0.0,13.5,0.0,False,False,False,False,False
+Merluza al vapor,pescado,78,17.0,0.0,0.8,0.0,False,False,False,False,False
+Skyr natural,lacteo,63,10.3,4.0,0.2,0.0,False,True,False,True,False
+Queso batido 0%,lacteo,45,8.0,4.5,0.2,0.0,False,True,False,True,False
+Queso ricotta,lacteo,174,11.0,3.0,13.0,0.0,False,True,False,True,False
+Leche de coco light,bebida vegetal,16,0.2,2.0,1.0,0.0,False,False,False,True,True
+Datiles secos,fruta,282,2.5,75.0,0.4,8.0,False,False,False,True,True
+Pasas,fruta,299,3.1,79.0,0.5,3.7,False,False,False,True,True
+Ciruelas pasas,fruta,240,2.2,63.0,0.4,7.1,False,False,False,True,True
+Salsa de yogur natural,lacteo,72,3.5,4.5,4.5,0.0,False,True,False,True,False
+Vinagreta de aceite y limon,condimento,350,0.0,1.5,39.0,0.0,False,False,False,True,True
+Salsa de tomate casera sin azucar,condimento,42,1.8,8.0,0.8,1.8,False,False,False,True,True
+Gazpacho,conserva,35,0.8,5.0,1.8,1.0,False,False,False,True,True
+Crema de calabaza,verdura,42,1.2,8.5,1.2,1.5,False,False,False,True,True
+Crema de zanahoria,verdura,48,1.0,9.5,1.5,2.0,False,False,False,True,True
+Pure de boniato,verdura,92,1.8,21.5,0.1,3.2,False,False,False,True,True
+Filete de pollo empanado al horno,carne,190,18.0,12.0,7.5,0.8,True,False,False,False,False
+Pavo en lonchas Campofrío,embutido,100,18.0,1.0,3.0,0.0,False,False,False,False,False
+Jamon york bajo en sal,embutido,98,16.5,1.5,3.2,0.0,False,False,False,False,False
+Lomo embuchado,embutido,186,26.0,0.5,9.0,0.0,False,False,False,False,False
+Cecina de vaca,embutido,237,40.0,0.0,8.5,0.0,False,False,False,False,False
+Skyr natural Danone,lacteo,63,10.3,4.0,0.2,0.0,False,True,False,True,False
+Skyr de fresa Danone,lacteo,72,9.0,8.5,0.2,0.0,False,True,False,True,False
+Queso batido 0% Mercadona,lacteo,44,7.8,4.5,0.1,0.0,False,True,False,True,False
+Batido de avena Alpro,bebida vegetal,50,1.0,8.5,1.2,0.8,True,False,False,True,True
+Bebida de soja sin azucar Alpro,bebida vegetal,27,2.8,0.8,1.6,0.0,False,False,False,True,True
+Pan de molde proteico,cereal_desayuno,240,18.0,34.0,4.0,6.5,True,False,False,True,True
+Galletas de avena sin azucar,cereal_desayuno,420,10.0,62.0,14.0,6.0,True,False,False,True,True
+Barra de cereales sin azucar,cereal_desayuno,380,8.0,65.0,10.0,5.0,True,False,False,True,True
+Macarrones de legumbres,cereal_comida,340,21.0,52.0,4.0,10.0,False,False,False,True,True
+Pasta de lentejas,cereal_comida,338,24.0,48.0,3.5,12.0,False,False,False,True,True
+Atun claro en agua Calvo,pescado,103,25.0,0.0,1.0,0.0,False,False,False,False,False
+Sardinas en tomate Calvo,pescado,172,15.0,4.5,10.0,0.0,False,False,False,False,False
+Mejillones en escabeche,marisco,120,12.0,4.0,6.5,0.0,False,False,False,False,False
+Berberechos al natural,marisco,63,10.5,3.5,0.8,0.0,False,False,False,False,False
+Clara de huevo liquida Mercadona,huevo,50,10.8,0.6,0.1,0.0,False,False,False,True,False
+Tortitas de arroz Mercadona,cereal_desayuno,385,7.5,81.0,3.0,1.5,False,False,False,True,True
+Tortitas de maiz Mercadona,cereal_desayuno,383,7.2,80.0,3.5,1.2,False,False,False,True,True
+Crema de cacahuete sin azucar,frutos secos,580,25.0,18.0,50.0,6.0,False,False,True,True,True
+Tomate natural triturado Hacendado,conserva,35,1.8,6.0,0.3,1.5,False,False,False,True,True
+Garbanzos cocidos bote,legumbre,120,7.5,18.0,2.0,6.0,False,False,False,True,True
+Lentejas cocidas bote,legumbre,100,8.0,17.0,0.4,5.5,False,False,False,True,True
+Alubias blancas bote,legumbre,110,7.2,19.0,0.5,5.8,False,False,False,True,True
+Edamame congelado,legumbre,122,11.0,10.0,5.2,5.2,False,False,False,True,True
+Pure de patata Maggi,verdura,340,7.0,74.0,1.5,5.0,False,True,False,True,False
+Verduras congeladas variadas,verdura,42,2.5,7.5,0.4,3.0,False,False,False,True,True
+Brocoli congelado,verdura,30,3.0,5.5,0.4,2.8,False,False,False,True,True
+Espinacas congeladas,verdura,20,2.5,2.8,0.4,2.2,False,False,False,True,True
+Guisantes congelados,verdura,75,5.0,13.5,0.4,5.0,False,False,False,True,True
+Salsa de soja Kikkoman,condimento,60,10.0,5.6,0.1,0.8,True,False,False,True,True
+Salsa de soja baja en sal Kikkoman,condimento,42,7.5,4.5,0.1,0.6,True,False,False,True,True
+Vinagre de modena,condimento,88,0.5,17.0,0.0,0.0,False,False,False,True,True
+Salsa cesar light,condimento,150,2.0,8.0,12.0,0.2,False,True,False,True,False
+Compota de manzana sin azucar,fruta,41,0.3,10.5,0.1,1.2,False,False,False,True,True
+Arandanos congelados,fruta,50,0.5,12.5,0.3,2.0,False,False,False,True,True
+Fresas congeladas,fruta,30,0.6,7.0,0.3,1.8,False,False,False,True,True
