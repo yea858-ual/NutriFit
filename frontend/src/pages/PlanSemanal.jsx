@@ -1,11 +1,10 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import api from '../api/http'
+import Layout from '../components/Layout'
 
 const DIAS = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
 
 export default function PlanSemanal() {
-  const navigate = useNavigate()
   const [plan, setPlan] = useState(null)
   const [diaActivo, setDiaActivo] = useState(0)
   const [cargando, setCargando] = useState(false)
@@ -45,50 +44,46 @@ export default function PlanSemanal() {
   }
 
   if (cargando) return (
-    <div className="min-h-screen bg-white flex items-center justify-center">
-      <p className="text-gray-400 text-sm">Cargando tu plan semanal...</p>
-    </div>
+    <Layout>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '400px' }}>
+        <p style={{ fontSize: '13px', color: '#888' }}>Cargando tu plan semanal...</p>
+      </div>
+    </Layout>
   )
 
   const diaData = plan?.dias[diaActivo]
 
   return (
-    <div className="min-h-screen bg-white">
-
-      {/* Navbar */}
-      <nav className="border-b border-gray-100 px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 bg-green-500 rounded-full flex items-center justify-center">
-            <span className="text-white text-xs font-medium">N</span>
-          </div>
-          <span className="text-sm font-medium text-gray-900">NutriFit</span>
-        </div>
-        <div className="flex items-center gap-4">
-          <button onClick={() => navigate('/dashboard')} className="text-sm text-gray-500 hover:text-gray-900">Dashboard</button>
-          <button onClick={() => navigate('/compra')} className="text-sm text-gray-500 hover:text-gray-900">Lista compra</button>
-        </div>
-      </nav>
-
-      <div className="max-w-2xl mx-auto px-6 py-8">
+    <Layout>
+      <div style={{ maxWidth: '680px' }}>
 
         {/* Cabecera */}
-        <div className="flex items-center justify-between mb-6">
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
           <div>
-            <h1 className="text-xl font-medium text-gray-900">Plan semanal</h1>
-            <p className="text-sm text-gray-400">{plan?.total_alimentos_distintos} alimentos distintos esta semana</p>
+            <h1 style={{ fontSize: '22px', fontWeight: '500', color: '#111', margin: '0 0 4px' }}>Plan semanal</h1>
+            <p style={{ fontSize: '13px', color: '#888', margin: 0 }}>
+              {plan ? `${plan.total_alimentos_distintos} alimentos distintos esta semana` : ''}
+            </p>
           </div>
           <button onClick={regenerar} disabled={generando}
-            className="text-sm border border-gray-200 hover:border-green-300 text-gray-600 px-4 py-2 rounded-lg transition-colors disabled:opacity-50">
-            {generando ? 'Regenerando...' : '↻ Regenerar'}
+            style={{
+              background: '#fff', border: '0.5px solid #ddd', borderRadius: '8px',
+              padding: '8px 14px', fontSize: '12px', color: '#555', cursor: 'pointer'
+            }}>
+            {generando ? 'Regenerando...' : 'Regenerar plan'}
           </button>
         </div>
 
         {error && (
-          <div className="text-center py-16">
-            <p className="text-gray-400 text-sm mb-4">{error}</p>
+          <div style={{ textAlign: 'center', padding: '60px 0' }}>
+            <p style={{ fontSize: '13px', color: '#888', marginBottom: '16px' }}>{error}</p>
             <button onClick={regenerar} disabled={generando}
-              className="bg-green-500 hover:bg-green-600 text-white px-6 py-2 rounded-lg text-sm font-medium">
-              {generando ? 'Generando...' : 'Generar plan semanal →'}
+              style={{
+                background: '#0F6E56', color: '#fff', border: 'none',
+                borderRadius: '8px', padding: '11px 24px', fontSize: '13px',
+                fontWeight: '500', cursor: 'pointer'
+              }}>
+              {generando ? 'Generando...' : 'Generar plan semanal'}
             </button>
           </div>
         )}
@@ -96,13 +91,16 @@ export default function PlanSemanal() {
         {plan && (
           <>
             {/* Tabs días */}
-            <div className="flex gap-1 mb-6 overflow-x-auto pb-1">
+            <div style={{ display: 'flex', gap: '6px', marginBottom: '20px', overflowX: 'auto', paddingBottom: '4px' }}>
               {DIAS.map((dia, i) => (
                 <button key={dia} onClick={() => setDiaActivo(i)}
-                  className={`px-3 py-1.5 rounded-full text-xs font-medium whitespace-nowrap transition-colors
-                    ${diaActivo === i
-                      ? 'bg-green-500 text-white'
-                      : 'bg-gray-100 text-gray-500 hover:bg-gray-200'}`}>
+                  style={{
+                    padding: '6px 14px', borderRadius: '20px', border: 'none',
+                    fontSize: '12px', fontWeight: diaActivo === i ? '500' : '400',
+                    cursor: 'pointer', whiteSpace: 'nowrap',
+                    background: diaActivo === i ? '#0F6E56' : '#f0f0f0',
+                    color: diaActivo === i ? '#fff' : '#666',
+                  }}>
                   {dia.slice(0, 3)}
                 </button>
               ))}
@@ -111,33 +109,47 @@ export default function PlanSemanal() {
             {diaData && (
               <>
                 {/* Totales del día */}
-                <div className="grid grid-cols-4 gap-3 mb-6">
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr 1fr 1fr', gap: '10px', marginBottom: '16px' }}>
                   {[
                     { label: 'kcal', valor: Math.round(diaData.totales.kcal) },
                     { label: 'proteínas', valor: `${Math.round(diaData.totales.proteinas_g)}g` },
                     { label: 'carbos', valor: `${Math.round(diaData.totales.carbohidratos_g)}g` },
                     { label: 'grasas', valor: `${Math.round(diaData.totales.grasas_g)}g` },
                   ].map(t => (
-                    <div key={t.label} className="bg-gray-50 rounded-lg p-3 text-center">
-                      <p className="text-xs text-gray-400 mb-1">{t.label}</p>
-                      <p className="text-lg font-medium text-gray-900">{t.valor}</p>
+                    <div key={t.label} style={{
+                      background: '#fff', borderRadius: '10px', padding: '12px',
+                      border: '0.5px solid #eee', textAlign: 'center'
+                    }}>
+                      <p style={{ fontSize: '11px', color: '#888', margin: '0 0 4px' }}>{t.label}</p>
+                      <p style={{ fontSize: '18px', fontWeight: '500', color: '#111', margin: 0 }}>{t.valor}</p>
                     </div>
                   ))}
                 </div>
 
                 {/* Comidas */}
-                <div className="space-y-4">
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                   {diaData.comidas.map(comida => (
-                    <div key={comida.tipo} className="border border-gray-100 rounded-xl p-4">
-                      <div className="flex items-center justify-between mb-3">
-                        <span className="text-sm font-medium text-gray-900 capitalize">{comida.tipo}</span>
-                        <span className="text-xs text-gray-400">{Math.round(comida.kcal_total)} kcal</span>
+                    <div key={comida.tipo} style={{
+                      background: '#fff', borderRadius: '10px', padding: '16px',
+                      border: '0.5px solid #eee'
+                    }}>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '12px' }}>
+                        <span style={{
+                          fontSize: '11px', fontWeight: '500', color: '#0F6E56',
+                          textTransform: 'uppercase', letterSpacing: '0.05em'
+                        }}>{comida.tipo}</span>
+                        <span style={{ fontSize: '12px', color: '#888' }}>{Math.round(comida.kcal_total)} kcal</span>
                       </div>
-                      <div className="space-y-2">
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                         {comida.alimentos.map(a => (
-                          <div key={a.alimento_id} className="flex items-center justify-between">
-                            <span className="text-sm text-gray-600">{a.nombre}</span>
-                            <span className="text-xs text-gray-400">{a.cantidad_g}g</span>
+                          <div key={a.alimento_id} style={{
+                            display: 'flex', alignItems: 'center', justifyContent: 'space-between'
+                          }}>
+                            <span style={{ fontSize: '13px', color: '#333' }}>{a.nombre}</span>
+                            <span style={{
+                              fontSize: '12px', color: '#888', background: '#f8f8f8',
+                              padding: '2px 8px', borderRadius: '4px'
+                            }}>{a.cantidad_g}g</span>
                           </div>
                         ))}
                       </div>
@@ -149,6 +161,6 @@ export default function PlanSemanal() {
           </>
         )}
       </div>
-    </div>
+    </Layout>
   )
 }

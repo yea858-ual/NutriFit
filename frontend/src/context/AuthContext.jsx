@@ -12,7 +12,11 @@ export function AuthProvider({ children }) {
       if (token) {
         try {
           const res = await api.get('/users/me')
-          setUsuario({ nombre: res.data.nombre, email: res.data.email })
+          setUsuario({
+            nombre: res.data.nombre,
+            email: res.data.email,
+            objetivo: res.data.objetivo,
+          })
         } catch (err) {
           logout()
         }

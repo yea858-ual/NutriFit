@@ -28,70 +28,109 @@ export default function Register() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 w-full max-w-md">
+    <div style={{
+      minHeight: '100vh', background: '#f8f9fa',
+      display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px'
+    }}>
+      <div style={{ width: '100%', maxWidth: '400px' }}>
 
         {/* Logo */}
-        <div className="text-center mb-8">
-          <div className="inline-flex items-center gap-2 mb-2">
-            <div className="w-8 h-8 bg-green-500 rounded-full flex items-center justify-center">
-              <span className="text-white text-sm font-bold">N</span>
-            </div>
-            <span className="text-xl font-semibold text-gray-900">NutriFit</span>
-          </div>
-          <p className="text-gray-500 text-sm">Crea tu cuenta</p>
+        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+          <div style={{
+            width: '40px', height: '40px', background: '#0F6E56',
+            borderRadius: '50%', display: 'flex', alignItems: 'center',
+            justifyContent: 'center', margin: '0 auto 12px',
+            fontSize: '16px', fontWeight: '600', color: '#fff'
+          }}>N</div>
+          <h1 style={{ fontSize: '20px', fontWeight: '600', color: '#111', margin: '0 0 4px' }}>
+            NutriFit
+          </h1>
+          <p style={{ fontSize: '13px', color: '#888', margin: 0 }}>
+            Crea tu cuenta
+          </p>
         </div>
 
-        {/* Formulario */}
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Nombre</label>
-            <input
-              type="text"
-              value={nombre}
-              onChange={(e) => setNombre(e.target.value)}
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="Tu nombre"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="tu@email.com"
-              required
-            />
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Contraseña</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
-              placeholder="Mínimo 6 caracteres"
-              required
-            />
-          </div>
+        {/* Card */}
+        <div style={{
+          background: '#fff', borderRadius: '14px',
+          padding: '28px', border: '0.5px solid #e8e8e8'
+        }}>
+          <form onSubmit={handleSubmit}>
 
-          {error && <p className="text-red-500 text-sm">{error}</p>}
+            <div style={{ marginBottom: '16px' }}>
+              <label style={{ display: 'block', fontSize: '12px', fontWeight: '500', color: '#555', marginBottom: '6px' }}>
+                Nombre completo
+              </label>
+              <input
+                type="text"
+                value={nombre}
+                onChange={(e) => setNombre(e.target.value)}
+                placeholder="Tu nombre"
+                required
+                style={{
+                  width: '100%', border: '0.5px solid #ddd', borderRadius: '8px',
+                  padding: '10px 12px', fontSize: '13px', color: '#111',
+                  outline: 'none', boxSizing: 'border-box', background: '#fff'
+                }}
+              />
+            </div>
 
-          <button
-            type="submit"
-            disabled={cargando}
-            className="w-full bg-green-500 hover:bg-green-600 text-white font-medium py-3 rounded-xl text-sm transition-colors disabled:opacity-50"
-          >
-            {cargando ? 'Creando cuenta...' : 'Crear cuenta'}
-          </button>
-        </form>
+            <div style={{ marginBottom: '16px' }}>
+              <label style={{ display: 'block', fontSize: '12px', fontWeight: '500', color: '#555', marginBottom: '6px' }}>
+                Email
+              </label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="tu@email.com"
+                required
+                style={{
+                  width: '100%', border: '0.5px solid #ddd', borderRadius: '8px',
+                  padding: '10px 12px', fontSize: '13px', color: '#111',
+                  outline: 'none', boxSizing: 'border-box', background: '#fff'
+                }}
+              />
+            </div>
 
-        <p className="text-center text-sm text-gray-500 mt-6">
+            <div style={{ marginBottom: '20px' }}>
+              <label style={{ display: 'block', fontSize: '12px', fontWeight: '500', color: '#555', marginBottom: '6px' }}>
+                Contraseña
+              </label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                placeholder="Mínimo 6 caracteres"
+                required
+                style={{
+                  width: '100%', border: '0.5px solid #ddd', borderRadius: '8px',
+                  padding: '10px 12px', fontSize: '13px', color: '#111',
+                  outline: 'none', boxSizing: 'border-box', background: '#fff'
+                }}
+              />
+            </div>
+
+            {error && (
+              <p style={{ fontSize: '12px', color: '#e53e3e', margin: '0 0 16px' }}>{error}</p>
+            )}
+
+            <button
+              type="submit"
+              disabled={cargando}
+              style={{
+                width: '100%', background: '#0F6E56', color: '#fff', border: 'none',
+                borderRadius: '8px', padding: '11px', fontSize: '13px',
+                fontWeight: '500', cursor: 'pointer', opacity: cargando ? 0.7 : 1
+              }}>
+              {cargando ? 'Creando cuenta...' : 'Crear cuenta'}
+            </button>
+          </form>
+        </div>
+
+        <p style={{ textAlign: 'center', fontSize: '13px', color: '#888', marginTop: '16px' }}>
           ¿Ya tienes cuenta?{' '}
-          <Link to="/login" className="text-green-500 font-medium hover:underline">
+          <Link to="/login" style={{ color: '#0F6E56', fontWeight: '500', textDecoration: 'none' }}>
             Inicia sesión
           </Link>
         </p>
