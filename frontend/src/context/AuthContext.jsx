@@ -7,22 +7,26 @@ export function AuthProvider({ children }) {
   const [token, setToken] = useState(localStorage.getItem('token'))
   const [usuario, setUsuario] = useState(null)
 
-  useEffect(() => {
-    const cargarUsuario = async () => {
-      if (token) {
-        try {
-          const res = await api.get('/users/me')
-          setUsuario({
-            nombre: res.data.nombre,
-            email: res.data.email,
-            objetivo: res.data.objetivo,
-          })
-        } catch (err) {
-          logout()
-        }
-      }
+  const cargarUsuario = async () => {
+    try {
+      const res = await api.get('/users/me')
+      setUsuario({
+        nombre: res.data.nombre,
+        email: res.data.email,
+        objetivo: res.data.objetivo,
+        intolerancia_gluten: res.data.intolerancia_gluten === true,
+        intolerancia_lactosa: res.data.intolerancia_lactosa === true,
+        alergia_frutos_secos: res.data.alergia_frutos_secos === true,
+        dieta_vegetariana: res.data.dieta_vegetariana === true,
+        dieta_vegana: res.data.dieta_vegana === true,
+      })
+    } catch (err) {
+      logout()
     }
-    cargarUsuario()
+  }
+
+  useEffect(() => {
+    if (token) cargarUsuario()
   }, [token])
 
   const login = (tokenNuevo, datosUsuario) => {
@@ -40,7 +44,7 @@ export function AuthProvider({ children }) {
   const estaLogueado = !!token
 
   return (
-    <AuthContext.Provider value={{ token, usuario, login, logout, estaLogueado }}>
+    <AuthContext.Provider value={{ token, usuario, login, logout, estaLogueado, recargarUsuario: cargarUsuario }}>
       {children}
     </AuthContext.Provider>
   )

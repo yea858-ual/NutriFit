@@ -1,33 +1,17 @@
 import { useState, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
 import api from '../api/http'
+import Layout from '../components/Layout'
 
 const NOMBRE_CATEGORIA = {
-  carne: 'Carne',
-  pescado: 'Pescado',
-  marisco: 'Marisco',
-  huevo: 'Huevo',
-  lacteo: 'Lácteo',
-  bebida_vegetal: 'Bebida vegetal',
-  verdura: 'Verdura',
-  legumbre: 'Legumbre',
-  cereal_desayuno: 'Cereales desayuno',
-  cereal_comida: 'Cereales comida',
-  fruta: 'Fruta',
-  frutos_secos: 'Frutos secos',
-  semillas: 'Semillas',
-  grasa: 'Grasa',
-  grasa_vegetal: 'Grasa vegetal',
-  embutido: 'Embutido',
-  conserva: 'Conserva',
-  condimento: 'Condimento',
-  caldo: 'Caldo',
-  suplemento: 'Suplemento',
-  dulce: 'Dulce',
+  carne: 'Carne', pescado: 'Pescado', marisco: 'Marisco', huevo: 'Huevo',
+  lacteo: 'Lácteo', bebida_vegetal: 'Bebida vegetal', verdura: 'Verdura',
+  legumbre: 'Legumbre', cereal_desayuno: 'Cereales desayuno',
+  cereal_comida: 'Cereales comida', fruta: 'Fruta', frutos_secos: 'Frutos secos',
+  semillas: 'Semillas', grasa: 'Grasa', grasa_vegetal: 'Grasa vegetal',
+  embutido: 'Embutido', conserva: 'Conserva', condimento: 'Condimento',
 }
 
 export default function ListaCompra() {
-  const navigate = useNavigate()
   const [lista, setLista] = useState(null)
   const [cargando, setCargando] = useState(false)
   const [marcados, setMarcados] = useState({})
@@ -54,76 +38,91 @@ export default function ListaCompra() {
 
   const nombreCategoria = (cat) => NOMBRE_CATEGORIA[cat] || cat.charAt(0).toUpperCase() + cat.slice(1)
 
+  const totalMarcados = Object.values(marcados).filter(Boolean).length
+
   if (cargando) return (
-    <div className="min-h-screen bg-white flex items-center justify-center">
-      <p className="text-gray-400 text-sm">Generando lista de la compra...</p>
-    </div>
+    <Layout>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '400px' }}>
+        <p style={{ fontSize: '13px', color: '#888' }}>Cargando lista de la compra...</p>
+      </div>
+    </Layout>
   )
 
   return (
-    <div className="min-h-screen bg-white">
-
-      {/* Navbar */}
-      <nav className="border-b border-gray-100 px-6 py-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 bg-green-500 rounded-full flex items-center justify-center">
-            <span className="text-white text-xs font-medium">N</span>
-          </div>
-          <span className="text-sm font-medium text-gray-900">NutriFit</span>
-        </div>
-        <div className="flex items-center gap-4">
-          <button onClick={() => navigate('/dashboard')} className="text-sm text-gray-500 hover:text-gray-900">Dashboard</button>
-          <button onClick={() => navigate('/plan')} className="text-sm text-gray-500 hover:text-gray-900">Plan semanal</button>
-        </div>
-      </nav>
-
-      <div className="max-w-2xl mx-auto px-6 py-8">
+    <Layout>
+      <div style={{ maxWidth: '680px' }}>
 
         {/* Cabecera */}
-        <div className="flex items-center justify-between mb-6">
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
           <div>
-            <h1 className="text-xl font-medium text-gray-900">Lista de la compra</h1>
-            <p className="text-sm text-gray-400">
-              {lista?.total_ingredientes} ingredientes · {lista?.total_categorias} categorías
+            <h1 style={{ fontSize: '22px', fontWeight: '500', color: '#111', margin: '0 0 4px' }}>Lista de la compra</h1>
+            <p style={{ fontSize: '13px', color: '#888', margin: 0 }}>
+              {lista ? `${lista.total_ingredientes} ingredientes · ${totalMarcados} marcados` : ''}
             </p>
           </div>
           <button onClick={() => setMarcados({})}
-            className="text-xs text-gray-400 hover:text-gray-600 border border-gray-200 px-3 py-1.5 rounded-lg">
+            style={{
+              background: '#fff', border: '0.5px solid #ddd', borderRadius: '8px',
+              padding: '8px 14px', fontSize: '12px', color: '#555', cursor: 'pointer'
+            }}>
             Limpiar
           </button>
         </div>
 
-        {/* Lista por categorías */}
+        {/* Categorías */}
         {lista?.categorias.map(cat => (
-          <div key={cat.categoria} className="mb-6">
-            <p className="text-xs font-medium text-gray-400 uppercase tracking-wider mb-3">
+          <div key={cat.categoria} style={{ marginBottom: '24px' }}>
+            <p style={{
+              fontSize: '11px', fontWeight: '500', color: '#0F6E56',
+              textTransform: 'uppercase', letterSpacing: '0.06em', margin: '0 0 8px'
+            }}>
               {nombreCategoria(cat.categoria)} ({cat.total_items})
             </p>
-            <div className="space-y-1">
-              {cat.items.map(item => {
+            <div style={{
+              background: '#fff', borderRadius: '10px',
+              border: '0.5px solid #eee', overflow: 'hidden'
+            }}>
+              {cat.items.map((item, idx) => {
                 const key = `${cat.categoria}-${item.nombre}`
                 const marcado = marcados[key]
                 return (
-                  <button key={key} onClick={() => toggleMarcado(key)}
-                    className="w-full flex items-center justify-between py-2.5 px-3 rounded-lg hover:bg-gray-50 transition-colors text-left">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-5 h-5 rounded-full border flex items-center justify-center transition-colors
-                        ${marcado ? 'bg-green-500 border-green-500' : 'border-gray-300'}`}>
-                        {marcado && <span className="text-white text-xs">✓</span>}
+                  <div key={key} onClick={() => toggleMarcado(key)}
+                    style={{
+                      display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+                      padding: '11px 14px', cursor: 'pointer',
+                      borderBottom: idx < cat.items.length - 1 ? '0.5px solid #f5f5f5' : 'none',
+                      background: marcado ? '#fafafa' : '#fff'
+                    }}>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                      <div style={{
+                        width: '18px', height: '18px', borderRadius: '50%',
+                        border: marcado ? 'none' : '1.5px solid #ccc',
+                        background: marcado ? '#0F6E56' : 'transparent',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        flexShrink: 0
+                      }}>
+                        {marcado && <span style={{ color: '#fff', fontSize: '11px' }}>✓</span>}
                       </div>
-                      <span className={`text-sm transition-colors ${marcado ? 'text-gray-300 line-through' : 'text-gray-700'}`}>
+                      <span style={{
+                        fontSize: '13px', color: marcado ? '#bbb' : '#333',
+                        textDecoration: marcado ? 'line-through' : 'none'
+                      }}>
                         {item.nombre}
                       </span>
                     </div>
-                    <span className="text-xs text-gray-400">{item.cantidad_legible}</span>
-                  </button>
+                    <span style={{
+                      fontSize: '12px', color: '#999', background: '#f5f5f5',
+                      padding: '2px 8px', borderRadius: '4px'
+                    }}>
+                      {item.cantidad_legible}
+                    </span>
+                  </div>
                 )
               })}
             </div>
-            <div className="h-px bg-gray-100 mt-4"></div>
           </div>
         ))}
       </div>
-    </div>
+    </Layout>
   )
 }

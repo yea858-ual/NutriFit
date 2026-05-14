@@ -6,6 +6,7 @@ import Dashboard from './pages/Dashboard'
 import Perfil from './pages/Perfil'
 import PlanSemanal from './pages/PlanSemanal'
 import ListaCompra from './pages/ListaCompra'
+import Buscador from './pages/Buscador'
 
 function ProtectedRoute({ children }) {
   const { estaLogueado } = useAuth()
@@ -21,6 +22,7 @@ function App() {
       <Route path="/perfil" element={<ProtectedRoute><Perfil /></ProtectedRoute>} />
       <Route path="/plan" element={<ProtectedRoute><PlanSemanal /></ProtectedRoute>} />
       <Route path="/compra" element={<ProtectedRoute><ListaCompra /></ProtectedRoute>} />
+      <Route path="/buscador" element={<ProtectedRoute><Buscador /></ProtectedRoute>} />
       <Route path="*" element={<Navigate to="/login" />} />
     </Routes>
   )

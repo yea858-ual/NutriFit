@@ -4,6 +4,14 @@ import { useAuth } from '../context/AuthContext'
 import api from '../api/http'
 import Layout from '../components/Layout'
 
+const ETIQUETAS_INTOLERANCIAS = [
+  { key: 'intolerancia_gluten', label: 'Sin gluten' },
+  { key: 'intolerancia_lactosa', label: 'Sin lactosa' },
+  { key: 'alergia_frutos_secos', label: 'Sin frutos secos' },
+  { key: 'dieta_vegetariana', label: 'Vegetariano' },
+  { key: 'dieta_vegana', label: 'Vegano' },
+]
+
 export default function Dashboard() {
   const { usuario } = useAuth()
   const navigate = useNavigate()
@@ -33,15 +41,33 @@ export default function Dashboard() {
     }
   }
 
+  const intoleranciasActivas = ETIQUETAS_INTOLERANCIAS.filter(i => usuario?.[i.key])
+
   return (
     <Layout>
       <div style={{ maxWidth: '680px' }}>
 
+        {/* Saludo */}
         <div style={{ marginBottom: '24px' }}>
           <h1 style={{ fontSize: '22px', fontWeight: '500', color: '#111', margin: '0 0 4px' }}>
             Hola, {usuario?.nombre?.split(' ')[0]}
           </h1>
-          <p style={{ fontSize: '13px', color: '#888', margin: 0 }}>Tu resumen nutricional de hoy</p>
+          <p style={{ fontSize: '13px', color: '#888', margin: '0 0 10px' }}>Tu resumen nutricional de hoy</p>
+
+          {/* Intolerancias */}
+          {intoleranciasActivas.length > 0 && (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+              {intoleranciasActivas.map(i => (
+                <span key={i.key} style={{
+                  fontSize: '11px', fontWeight: '500',
+                  background: '#E1F5EE', color: '#0F6E56',
+                  padding: '3px 10px', borderRadius: '20px',
+                }}>
+                  {i.label}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
 
         {plan ? (
