@@ -11,12 +11,17 @@ const NOMBRE_CATEGORIA = {
   embutido: 'Embutido', conserva: 'Conserva', condimento: 'Condimento',
 }
 
+const STORAGE_KEY = 'nutrifit_lista_compra'
+
 export default function ListaCompra() {
   const [lista, setLista] = useState(null)
   const [cargando, setCargando] = useState(false)
   const [marcados, setMarcados] = useState({})
 
   useEffect(() => {
+    // Cargar marcados guardados
+    const guardados = localStorage.getItem(STORAGE_KEY)
+    if (guardados) setMarcados(JSON.parse(guardados))
     cargarLista()
   }, [])
 
@@ -33,7 +38,16 @@ export default function ListaCompra() {
   }
 
   const toggleMarcado = (key) => {
-    setMarcados(prev => ({ ...prev, [key]: !prev[key] }))
+    setMarcados(prev => {
+      const nuevos = { ...prev, [key]: !prev[key] }
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(nuevos))
+      return nuevos
+    })
+  }
+
+  const limpiar = () => {
+    setMarcados({})
+    localStorage.removeItem(STORAGE_KEY)
   }
 
   const nombreCategoria = (cat) => NOMBRE_CATEGORIA[cat] || cat.charAt(0).toUpperCase() + cat.slice(1)
@@ -52,7 +66,6 @@ export default function ListaCompra() {
     <Layout>
       <div style={{ maxWidth: '680px' }}>
 
-        {/* Cabecera */}
         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '24px' }}>
           <div>
             <h1 style={{ fontSize: '22px', fontWeight: '500', color: '#111', margin: '0 0 4px' }}>Lista de la compra</h1>
@@ -60,7 +73,7 @@ export default function ListaCompra() {
               {lista ? `${lista.total_ingredientes} ingredientes · ${totalMarcados} marcados` : ''}
             </p>
           </div>
-          <button onClick={() => setMarcados({})}
+          <button onClick={limpiar}
             style={{
               background: '#fff', border: '0.5px solid #ddd', borderRadius: '8px',
               padding: '8px 14px', fontSize: '12px', color: '#555', cursor: 'pointer'
@@ -69,7 +82,6 @@ export default function ListaCompra() {
           </button>
         </div>
 
-        {/* Categorías */}
         {lista?.categorias.map(cat => (
           <div key={cat.categoria} style={{ marginBottom: '24px' }}>
             <p style={{

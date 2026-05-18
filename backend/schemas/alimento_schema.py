@@ -41,4 +41,5 @@ class OpenFoodFactsItem(BaseModel):
     proteinas_100g: Optional[float] = None
     carbohidratos_100g: Optional[float] = None
     grasas_100g: Optional[float] = None
+    imagen_url: Optional[str] = None
     fuente: str = "OpenFoodFacts"

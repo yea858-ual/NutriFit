@@ -19,12 +19,12 @@ CATEGORIAS_COMIDA = {
     },
     "comida": {
         "proteina": ["carne", "pescado", "marisco", "legumbre"],
-        "carbo":    ["cereal_comida", "legumbre"],
+        "carbo":    ["cereal_comida"],
         "verdura":  ["verdura"],
         "grasa":    ["grasa"],
     },
     "cena": {
-        "proteina": ["pescado", "carne", "huevo", "legumbre"],
+        "proteina": ["pescado", "carne", "marisco", "huevo", "legumbre"],
         "carbo":    ["cereal_comida"],
         "verdura":  ["verdura"],
         "grasa":    ["grasa", "grasa vegetal"],
@@ -40,9 +40,12 @@ EXCLUIDOS = [
     "Chorizo",
     "Mortadela",
     "Margarina vegetal",
-    "Ajo",           # condimento, no alimento principal
-    "Cebolleta",     # condimento, no alimento principal
-    "Rabano",        # muy poco valor nutricional como principal
+    "Ajo",
+    "Cebolleta",
+    "Rabano",
+    "Yema de huevo",
+    "Filete de pollo empanado al horno",
+    "Tomate seco",
 ]
 
 # ── FRUTAS APTAS PARA DESAYUNO ────────────────────────────
@@ -54,22 +57,22 @@ FRUTAS_DESAYUNO = [
 
 # ── GRAMAJES POR TIPO ──────────────────────────────────────
 GRAMAJES_DESAYUNO = {
-    "proteina": {"min": 80,  "max": 350},
-    "carbo":    {"min": 50,  "max": 150},
-    "fruta":    {"min": 100, "max": 250},
+    "proteina": {"min": 60,  "max": 350},
+    "carbo":    {"min": 40,  "max": 150},
+    "fruta":    {"min": 80,  "max": 250},
     "grasa":    {"min": 15,  "max": 40},
 }
 
 GRAMAJES_COMIDA = {
-    "proteina": {"min": 150, "max": 450},
-    "carbo":    {"min": 100, "max": 300},
+    "proteina": {"min": 100, "max": 500},
+    "carbo":    {"min": 60,  "max": 300},
     "verdura":  {"min": 150, "max": 300},
     "grasa":    {"min": 10,  "max": 20},
 }
 
 GRAMAJES_CENA = {
-    "proteina": {"min": 150, "max": 400},
-    "carbo":    {"min": 80,  "max": 250},
+    "proteina": {"min": 100, "max": 500},
+    "carbo":    {"min": 50,  "max": 250},
     "verdura":  {"min": 150, "max": 300},
     "grasa":    {"min": 10,  "max": 20},
 }
@@ -177,7 +180,7 @@ def generar_desayuno(disponibles: List[Alimento], kcal_target: float, usados: se
 
 
 def generar_comida_principal(tipo: str, disponibles: List[Alimento], kcal_target: float, usados: set) -> List[Dict]:
-    """Genera comida o cena: proteína + carbohidrato + verdura + grasa."""
+    """Genera comida o cena: proteína + carbohidrato + 2 verduras + grasa."""
     items = []
     gramajes = GRAMAJES_COMIDA if tipo == "comida" else GRAMAJES_CENA
 

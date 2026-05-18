@@ -90,14 +90,14 @@ async def buscar_openfoodfacts(
     Busca alimentos en OpenFoodFacts (base de datos externa).
     Útil cuando el alimento no está en la base de datos local.
     """
-    url = f"https://world.openfoodfacts.org/cgi/search.pl"
+    url = "https://world.openfoodfacts.org/cgi/search.pl"
     params = {
         "search_terms": q,
         "search_simple": 1,
         "action": "process",
         "json": 1,
         "page_size": 10,
-        "fields": "product_name,brands,nutriments",
+        "fields": "product_name,brands,nutriments,image_front_small_url",
         "tagtype_0": "countries",
         "tag_contains_0": "contains",
         "tag_0": "spain",
@@ -127,6 +127,7 @@ async def buscar_openfoodfacts(
             proteinas_100g=nutriments.get("proteins_100g"),
             carbohidratos_100g=nutriments.get("carbohydrates_100g"),
             grasas_100g=nutriments.get("fat_100g"),
+            imagen_url=p.get("image_front_small_url", None),
         ))
 
     return productos
