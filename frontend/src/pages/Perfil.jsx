@@ -28,7 +28,7 @@ const INTOLERANCIAS = [
 
 export default function Perfil() {
   const navigate = useNavigate()
-  const { recargarUsuario } = useAuth()
+  const { recargarUsuario, logout } = useAuth()
   const [form, setForm] = useState({
     edad: '', peso_kg: '', altura_cm: '', sexo: 'hombre',
     nivel_actividad: 'moderado', objetivo: 'mantenimiento',
@@ -209,6 +209,49 @@ export default function Perfil() {
             }}>
             {guardando ? 'Guardando...' : 'Guardar perfil'}
           </button>
+
+          {/* Eliminar cuenta */}
+          <div style={{
+            marginTop: '24px',
+            paddingTop: '20px',
+            borderTop: '0.5px solid #eee'
+          }}>
+            <button
+              type="button"
+              onMouseEnter={e => {
+                e.currentTarget.style.background = '#e53e3e'
+                e.currentTarget.style.color = '#fff'
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = 'transparent'
+                e.currentTarget.style.color = '#e53e3e'
+              }}
+              onClick={async () => {
+                if (window.confirm('¿Estás seguro? Esta acción eliminará tu cuenta y todos tus datos de forma permanente.')) {
+                  try {
+                    await api.delete('/users/me')
+                    logout()
+                    navigate('/login')
+                  } catch (err) {
+                    setError('Error al eliminar la cuenta')
+                  }
+                }
+              }}
+              style={{
+                background: 'transparent',
+                border: '0.5px solid #e53e3e',
+                borderRadius: '10px',
+                padding: '10px 20px',
+                fontSize: '12px',
+                color: '#e53e3e',
+                cursor: 'pointer',
+                width: '100%',
+                transition: 'all 0.2s'
+              }}>
+              Eliminar cuenta permanentemente
+            </button>
+          </div>
+
         </form>
       </div>
     </Layout>
