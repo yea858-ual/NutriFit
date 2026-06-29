@@ -3,6 +3,7 @@ import { AuthProvider, useAuth } from '../context/AuthContext'
 import { useEffect, useState } from 'react'
 import { useRouter, useSegments } from 'expo-router'
 import { View, Text, StyleSheet, ActivityIndicator } from 'react-native'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 function RootLayoutNav() {
   const { estaLogueado, cargando } = useAuth()
@@ -50,9 +51,11 @@ function RootLayoutNav() {
 
 export default function RootLayout() {
   return (
-    <AuthProvider>
-      <RootLayoutNav />
-    </AuthProvider>
+    <SafeAreaProvider>
+      <AuthProvider>
+        <RootLayoutNav />
+      </AuthProvider>
+    </SafeAreaProvider>
   )
 }
 

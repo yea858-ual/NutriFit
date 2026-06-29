@@ -1,3 +1,4 @@
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useState, useEffect } from 'react'
 import {
   View, Text, StyleSheet, ScrollView,
@@ -12,6 +13,7 @@ const KCAL_POR_PASO = 0.04 // aproximación media
 
 export default function PedometroScreen() {
   const router = useRouter()
+  const insets = useSafeAreaInsets()
   const [pasos, setPasos] = useState(0)
   const [disponible, setDisponible] = useState<boolean | null>(null)
   const [plan, setPlan] = useState<any>(null)
@@ -52,7 +54,7 @@ export default function PedometroScreen() {
   const ajusteCalórico = kcalQuemadas > 300 ? `+${kcalQuemadas - 300}` : `${kcalQuemadas - 300}`
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={[styles.container, { paddingTop: insets.top }]}>
       <View style={styles.content}>
 
         <TouchableOpacity onPress={() => router.back()} style={styles.btnVolver}>

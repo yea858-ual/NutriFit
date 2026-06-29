@@ -1,3 +1,4 @@
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useState, useEffect } from 'react'
 import {
   View, Text, StyleSheet, ScrollView,
@@ -18,6 +19,7 @@ const COMIDAS = [
 
 export default function Diario() {
   const router = useRouter()
+  const insets = useSafeAreaInsets()
   const [fotos, setFotos] = useState<Record<string, string>>({})
   const [fecha, setFecha] = useState(new Date().toISOString().split('T')[0])
 
@@ -109,7 +111,7 @@ export default function Diario() {
   }
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={[styles.container, { paddingTop: insets.top }]}>
       <View style={styles.content}>
 
         <TouchableOpacity onPress={() => router.back()} style={styles.btnVolver}>

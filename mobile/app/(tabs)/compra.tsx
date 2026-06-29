@@ -1,3 +1,4 @@
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useState, useEffect, useCallback } from 'react'
 import {
   View, Text, StyleSheet, ScrollView,
@@ -18,6 +19,7 @@ const NOMBRE_CATEGORIA: Record<string, string> = {
 }
 
 export default function ListaCompra() {
+  const insets = useSafeAreaInsets()
   const [lista, setLista] = useState<any>(null)
   const [cargando, setCargando] = useState(true)
   const [marcados, setMarcados] = useState<Record<string, boolean>>({})
@@ -88,7 +90,7 @@ export default function ListaCompra() {
 
   return (
     <ScrollView
-      style={styles.container}
+      style={[styles.container, { paddingTop: insets.top }]}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#0F6E56" />}
     >
       <View style={styles.content}>

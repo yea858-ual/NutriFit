@@ -1,3 +1,4 @@
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useState, useEffect } from 'react'
 import {
   View, Text, StyleSheet, ScrollView,
@@ -42,6 +43,7 @@ export default function Perfil() {
   const [cargando, setCargando] = useState(true)
   const [guardando, setGuardando] = useState(false)
   const [error, setError] = useState('')
+  const insets = useSafeAreaInsets()
 
   useEffect(() => {
     const cargar = async () => {
@@ -135,7 +137,7 @@ export default function Perfil() {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <ScrollView style={styles.scroll} keyboardShouldPersistTaps="handled">
+      <ScrollView style={[styles.container, { paddingTop: insets.top }]} keyboardShouldPersistTaps="handled">
         <View style={styles.content}>
 
           <Text style={styles.titulo}>Mi perfil</Text>

@@ -1,3 +1,4 @@
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useState, useEffect } from 'react'
 import {
   View, Text, StyleSheet, ScrollView,
@@ -19,6 +20,7 @@ export default function Dashboard() {
   const { usuario } = useAuth()
   const router = useRouter()
   const [plan, setPlan] = useState<any>(null)
+  const insets = useSafeAreaInsets()
   const [recalculando, setRecalculando] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
 
@@ -59,7 +61,7 @@ export default function Dashboard() {
 
   return (
     <ScrollView
-      style={styles.container}
+      style={[styles.container, { paddingTop: insets.top }]}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#0F6E56" />}
     >
       <View style={styles.content}>

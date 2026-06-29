@@ -1,3 +1,4 @@
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useState, useEffect } from 'react'
 import {
   View, Text, StyleSheet, ScrollView,
@@ -15,6 +16,7 @@ export default function PlanSemanal() {
   const [generando, setGenerando] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
   const [error, setError] = useState('')
+  const insets = useSafeAreaInsets()
 
   const cargarPlan = async () => {
     setError('')
@@ -64,7 +66,7 @@ export default function PlanSemanal() {
 
   return (
     <ScrollView
-      style={styles.container}
+      style={[styles.container, { paddingTop: insets.top }]}
       refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#0F6E56" />}
     >
       <View style={styles.content}>

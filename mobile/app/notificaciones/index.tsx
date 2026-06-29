@@ -1,3 +1,4 @@
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useState, useEffect } from 'react'
 import {
   View, Text, StyleSheet, ScrollView,
@@ -29,6 +30,7 @@ const RECORDATORIOS_DEFAULT = [
 
 export default function Notificaciones() {
   const router = useRouter()
+  const insets = useSafeAreaInsets()
   const [recordatorios, setRecordatorios] = useState(RECORDATORIOS_DEFAULT)
   const [permiso, setPermiso] = useState(false)
 
@@ -80,7 +82,7 @@ export default function Notificaciones() {
   }
 
   return (
-    <ScrollView style={styles.container}>
+    <ScrollView style={[styles.container, { paddingTop: insets.top }]}>
       <View style={styles.content}>
 
         <TouchableOpacity onPress={() => router.back()} style={styles.btnVolver}>

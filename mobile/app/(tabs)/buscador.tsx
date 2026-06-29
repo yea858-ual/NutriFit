@@ -1,3 +1,4 @@
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useState, useEffect, useRef } from 'react'
 import {
   View, Text, StyleSheet, ScrollView, TextInput,
@@ -11,6 +12,7 @@ import api from '../../api/http'
 const STORAGE_KEY = 'nutrifit_buscador'
 
 export default function Buscador() {
+  const insets = useSafeAreaInsets()
   const [query, setQuery] = useState('')
   const [resultados, setResultados] = useState<any[]>([])
   const [resultadosOFF, setResultadosOFF] = useState<any[]>([])
@@ -124,7 +126,7 @@ export default function Buscador() {
       style={styles.container}
       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
     >
-      <ScrollView style={styles.scroll} keyboardShouldPersistTaps="handled">
+      <ScrollView style={[styles.scroll, { paddingTop: insets.top }]} keyboardShouldPersistTaps="handled">
         <View style={styles.content}>
 
           <Text style={styles.titulo}>Buscador</Text>
