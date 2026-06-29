@@ -1,5 +1,5 @@
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect } from 'react'
 import {
   View, Text, StyleSheet, ScrollView,
   TouchableOpacity, ActivityIndicator, RefreshControl, Share
@@ -89,73 +89,101 @@ export default function ListaCompra() {
   )
 
   return (
-    <ScrollView
-      style={[styles.container, { paddingTop: insets.top }]}
-      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#0F6E56" />}
-    >
-      <View style={styles.content}>
+    <View style={styles.wrapper}>
 
-        {/* Cabecera */}
-        <View style={styles.header}>
-          <View>
-            <Text style={styles.titulo}>Lista de la compra</Text>
-            {lista && (
-              <Text style={styles.subtitulo}>
-                {lista.total_ingredientes} ingredientes · {totalMarcados} marcados
-              </Text>
-            )}
-          </View>
-          <View style={styles.headerBtns}>
-            <TouchableOpacity style={styles.btnIcon} onPress={compartir}>
-              <Text style={styles.btnIconText}>Compartir</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.btnIcon} onPress={limpiar}>
-              <Text style={styles.btnIconText}>Limpiar</Text>
-            </TouchableOpacity>
-          </View>
+      {/* Header */}
+      <View style={[styles.headerBar, { paddingTop: insets.top + 12 }]}>
+        <View style={styles.headerLogo}>
+          <Text style={styles.headerLogoText}>N</Text>
         </View>
+        <Text style={styles.headerTitle}>NutriFit</Text>
+      </View>
 
-        {lista?.categorias.map((cat: any) => (
-          <View key={cat.categoria} style={styles.categoriaSection}>
-            <Text style={styles.categoriaTitulo}>
-              {nombreCategoria(cat.categoria)} ({cat.total_items})
-            </Text>
-            <View style={styles.categoriaCard}>
-              {cat.items.map((item: any, idx: number) => {
-                const key = `${cat.categoria}-${item.nombre}`
-                const marcado = marcados[key]
-                return (
-                  <TouchableOpacity
-                    key={key}
-                    style={[
-                      styles.itemRow,
-                      idx < cat.items.length - 1 && styles.itemBorder,
-                      marcado && styles.itemMarcado
-                    ]}
-                    onPress={() => toggleMarcado(key)}
-                  >
-                    <View style={[styles.checkbox, marcado && styles.checkboxMarcado]}>
-                      {marcado && <Text style={styles.checkmark}>✓</Text>}
-                    </View>
-                    <Text style={[styles.itemNombre, marcado && styles.itemNombreMarcado]}>
-                      {item.nombre}
-                    </Text>
-                    <View style={styles.cantidadBadge}>
-                      <Text style={styles.cantidadText}>{item.cantidad_legible}</Text>
-                    </View>
-                  </TouchableOpacity>
-                )
-              })}
+      <ScrollView
+        style={styles.container}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#0F6E56" />}
+      >
+        <View style={styles.content}>
+
+          {/* Cabecera */}
+          <View style={styles.header}>
+            <View>
+              <Text style={styles.titulo}>Lista de la compra</Text>
+              {lista && (
+                <Text style={styles.subtitulo}>
+                  {lista.total_ingredientes} ingredientes · {totalMarcados} marcados
+                </Text>
+              )}
+            </View>
+            <View style={styles.headerBtns}>
+              <TouchableOpacity style={styles.btnIcon} onPress={compartir}>
+                <Text style={styles.btnIconText}>Compartir</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.btnIcon} onPress={limpiar}>
+                <Text style={styles.btnIconText}>Limpiar</Text>
+              </TouchableOpacity>
             </View>
           </View>
-        ))}
-      </View>
-    </ScrollView>
+
+          {lista?.categorias.map((cat: any) => (
+            <View key={cat.categoria} style={styles.categoriaSection}>
+              <Text style={styles.categoriaTitulo}>
+                {nombreCategoria(cat.categoria)} ({cat.total_items})
+              </Text>
+              <View style={styles.categoriaCard}>
+                {cat.items.map((item: any, idx: number) => {
+                  const key = `${cat.categoria}-${item.nombre}`
+                  const marcado = marcados[key]
+                  return (
+                    <TouchableOpacity
+                      key={key}
+                      style={[
+                        styles.itemRow,
+                        idx < cat.items.length - 1 && styles.itemBorder,
+                        marcado && styles.itemMarcado
+                      ]}
+                      onPress={() => toggleMarcado(key)}
+                    >
+                      <View style={[styles.checkbox, marcado && styles.checkboxMarcado]}>
+                        {marcado && <Text style={styles.checkmark}>✓</Text>}
+                      </View>
+                      <Text style={[styles.itemNombre, marcado && styles.itemNombreMarcado]}>
+                        {item.nombre}
+                      </Text>
+                      <View style={styles.cantidadBadge}>
+                        <Text style={styles.cantidadText}>{item.cantidad_legible}</Text>
+                      </View>
+                    </TouchableOpacity>
+                  )
+                })}
+              </View>
+            </View>
+          ))}
+        </View>
+      </ScrollView>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f8f9fa' },
+  wrapper: { flex: 1, backgroundColor: '#f8f9fa' },
+  headerBar: {
+    backgroundColor: '#fff',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingBottom: 12,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#eee',
+  },
+  headerLogo: {
+    width: 28, height: 28, borderRadius: 14,
+    backgroundColor: '#0F6E56',
+    alignItems: 'center', justifyContent: 'center', marginRight: 8,
+  },
+  headerLogoText: { color: '#fff', fontSize: 13, fontWeight: '700' },
+  headerTitle: { fontSize: 16, fontWeight: '600', color: '#0F6E56' },
+  container: { flex: 1 },
   content: { padding: 20, paddingBottom: 40 },
   center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 20 },

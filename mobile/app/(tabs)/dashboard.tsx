@@ -19,8 +19,8 @@ const ETIQUETAS_INTOLERANCIAS = [
 export default function Dashboard() {
   const { usuario } = useAuth()
   const router = useRouter()
-  const [plan, setPlan] = useState<any>(null)
   const insets = useSafeAreaInsets()
+  const [plan, setPlan] = useState<any>(null)
   const [recalculando, setRecalculando] = useState(false)
   const [refreshing, setRefreshing] = useState(false)
 
@@ -60,160 +60,200 @@ export default function Dashboard() {
   const nombre = usuario?.nombre?.split(' ')[0] || ''
 
   return (
-    <ScrollView
-      style={[styles.container, { paddingTop: insets.top }]}
-      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#0F6E56" />}
-    >
-      <View style={styles.content}>
+    <View style={styles.wrapper}>
 
-        {/* Cabecera */}
-        <View style={styles.header}>
-          <Text style={styles.saludo}>Hola, {nombre} 👋</Text>
-          <Text style={styles.subtitulo}>Tu resumen nutricional</Text>
-          {intoleranciasActivas.length > 0 && (
-            <View style={styles.badges}>
-              {intoleranciasActivas.map(i => (
-                <View key={i.key} style={styles.badge}>
-                  <Text style={styles.badgeText}>{i.label}</Text>
+      {/* Header */}
+      <View style={[styles.headerBar, { paddingTop: insets.top + 12 }]}>
+        <View style={styles.headerLogo}>
+          <Text style={styles.headerLogoText}>N</Text>
+        </View>
+        <Text style={styles.headerTitle}>NutriFit</Text>
+      </View>
+
+      <ScrollView
+        style={styles.container}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#0F6E56" />}
+      >
+        <View style={styles.content}>
+
+          {/* Cabecera */}
+          <View style={styles.header}>
+            <Text style={styles.saludo}>Hola, {nombre} 👋</Text>
+            <Text style={styles.subtitulo}>Tu resumen nutricional</Text>
+            {intoleranciasActivas.length > 0 && (
+              <View style={styles.badges}>
+                {intoleranciasActivas.map(i => (
+                  <View key={i.key} style={styles.badge}>
+                    <Text style={styles.badgeText}>{i.label}</Text>
+                  </View>
+                ))}
+              </View>
+            )}
+          </View>
+
+          {plan ? (
+            <>
+              {/* Calorías */}
+              <View style={styles.calCard}>
+                <Text style={styles.calLabel}>Calorías diarias</Text>
+                <View style={styles.calRow}>
+                  <Text style={styles.calValue}>
+                    {Math.round(plan.calorias_objetivo).toLocaleString()}
+                  </Text>
+                  <Text style={styles.calUnit}>kcal</Text>
                 </View>
-              ))}
+                <Text style={styles.calObjetivo}>
+                  {plan.ajuste_calorico > 0
+                    ? `+${plan.ajuste_calorico} kcal · Ganar músculo`
+                    : plan.ajuste_calorico < 0
+                    ? `${plan.ajuste_calorico} kcal · Perder peso`
+                    : 'Mantenimiento'}
+                </Text>
+              </View>
+
+              {/* Macros */}
+              <View style={styles.macrosGrid}>
+                {[
+                  { label: 'Proteínas', valor: Math.round(plan.proteinas_g), unit: 'g', color: '#0F6E56' },
+                  { label: 'Carbohidratos', valor: Math.round(plan.carbohidratos_g), unit: 'g', color: '#BA7517' },
+                  { label: 'Grasas', valor: Math.round(plan.grasas_g), unit: 'g', color: '#185FA5' },
+                  { label: 'BMR', valor: Math.round(plan.bmr), unit: 'kcal', color: '#444' },
+                ].map(m => (
+                  <View key={m.label} style={styles.macroCard}>
+                    <Text style={styles.macroLabel}>{m.label}</Text>
+                    <Text style={[styles.macroValue, { color: m.color }]}>
+                      {m.valor}<Text style={styles.macroUnit}>{m.unit}</Text>
+                    </Text>
+                  </View>
+                ))}
+              </View>
+
+              {/* Distribución por comida */}
+              <View style={styles.card}>
+                <Text style={styles.cardTitle}>Distribución por comida</Text>
+                {Object.entries(plan.distribucion_comidas).map(([tipo, datos]: any) => (
+                  <View key={tipo} style={styles.comidaRow}>
+                    <Text style={styles.comidaNombre}>
+                      {tipo.charAt(0).toUpperCase() + tipo.slice(1)}
+                    </Text>
+                    <View style={styles.barContainer}>
+                      <View style={[styles.bar, {
+                        width: `${(datos.kcal / plan.calorias_objetivo) * 100}%` as any
+                      }]} />
+                    </View>
+                    <Text style={styles.comidaKcal}>{Math.round(datos.kcal)} kcal</Text>
+                  </View>
+                ))}
+              </View>
+
+              {/* Botones principales */}
+              <TouchableOpacity
+                style={styles.btnPrimary}
+                onPress={() => router.push('/(tabs)/plan')}
+              >
+                <Text style={styles.btnPrimaryText}>Ver plan semanal</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={styles.btnSecondary}
+                onPress={() => router.push('/(tabs)/compra')}
+              >
+                <Text style={styles.btnSecondaryText}>Lista de la compra</Text>
+              </TouchableOpacity>
+
+              {/* Herramientas nativas */}
+              <View style={styles.herramientasTitulo}>
+                <Text style={styles.herramientasLabel}>Herramientas</Text>
+              </View>
+
+              <View style={styles.herramientasGrid}>
+                <TouchableOpacity
+                  style={styles.herramientaCard}
+                  onPress={() => router.push('/notificaciones')}
+                >
+                  <Text style={styles.herramientaEmoji}>🔔</Text>
+                  <Text style={styles.herramientaNombre}>Recordatorio</Text>
+                  <Text style={styles.herramientaDesc}>Configura avisos de comidas</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.herramientaCard}
+                  onPress={() => router.push('/pedometro')}
+                >
+                  <Text style={styles.herramientaEmoji}>👣</Text>
+                  <Text style={styles.herramientaNombre}>Actividad</Text>
+                  <Text style={styles.herramientaDesc}>Pasos y calorías quemadas</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={styles.herramientaCard}
+                  onPress={() => router.push('/diario')}
+                >
+                  <Text style={styles.herramientaEmoji}>📸</Text>
+                  <Text style={styles.herramientaNombre}>Diario</Text>
+                  <Text style={styles.herramientaDesc}>Fotos de tus comidas</Text>
+                </TouchableOpacity>
+              </View>
+
+              <TouchableOpacity onPress={recalcular} disabled={recalculando}>
+                <Text style={styles.recalcular}>
+                  {recalculando ? 'Recalculando...' : 'Recalcular plan nutricional'}
+                </Text>
+              </TouchableOpacity>
+            </>
+          ) : (
+            <View style={styles.empty}>
+              <Text style={styles.emptyTitle}>Calcula tu plan nutricional</Text>
+              <Text style={styles.emptySubtitle}>Basado en tus datos y objetivos</Text>
+              <TouchableOpacity
+                style={styles.btnPrimary}
+                onPress={recalcular}
+                disabled={recalculando}
+              >
+                {recalculando
+                  ? <ActivityIndicator color="#fff" />
+                  : <Text style={styles.btnPrimaryText}>Calcular mi plan</Text>
+                }
+              </TouchableOpacity>
             </View>
           )}
         </View>
-
-        {plan ? (
-          <>
-            {/* Calorías */}
-            <View style={styles.calCard}>
-              <Text style={styles.calLabel}>Calorías diarias</Text>
-              <View style={styles.calRow}>
-                <Text style={styles.calValue}>
-                  {Math.round(plan.calorias_objetivo).toLocaleString()}
-                </Text>
-                <Text style={styles.calUnit}>kcal</Text>
-              </View>
-              <Text style={styles.calObjetivo}>
-                {plan.ajuste_calorico > 0
-                  ? `+${plan.ajuste_calorico} kcal · Ganar músculo`
-                  : plan.ajuste_calorico < 0
-                  ? `${plan.ajuste_calorico} kcal · Perder peso`
-                  : 'Mantenimiento'}
-              </Text>
-            </View>
-
-            {/* Macros */}
-            <View style={styles.macrosGrid}>
-              {[
-                { label: 'Proteínas', valor: Math.round(plan.proteinas_g), unit: 'g', color: '#0F6E56' },
-                { label: 'Carbohidratos', valor: Math.round(plan.carbohidratos_g), unit: 'g', color: '#BA7517' },
-                { label: 'Grasas', valor: Math.round(plan.grasas_g), unit: 'g', color: '#185FA5' },
-                { label: 'BMR', valor: Math.round(plan.bmr), unit: 'kcal', color: '#444' },
-              ].map(m => (
-                <View key={m.label} style={styles.macroCard}>
-                  <Text style={styles.macroLabel}>{m.label}</Text>
-                  <Text style={[styles.macroValue, { color: m.color }]}>
-                    {m.valor}<Text style={styles.macroUnit}>{m.unit}</Text>
-                  </Text>
-                </View>
-              ))}
-            </View>
-
-            {/* Distribución por comida */}
-            <View style={styles.card}>
-              <Text style={styles.cardTitle}>Distribución por comida</Text>
-              {Object.entries(plan.distribucion_comidas).map(([tipo, datos]: any) => (
-                <View key={tipo} style={styles.comidaRow}>
-                  <Text style={styles.comidaNombre}>
-                    {tipo.charAt(0).toUpperCase() + tipo.slice(1)}
-                  </Text>
-                  <View style={styles.barContainer}>
-                    <View style={[styles.bar, {
-                      width: `${(datos.kcal / plan.calorias_objetivo) * 100}%` as any
-                    }]} />
-                  </View>
-                  <Text style={styles.comidaKcal}>{Math.round(datos.kcal)} kcal</Text>
-                </View>
-              ))}
-            </View>
-
-            {/* Botones principales */}
-            <TouchableOpacity
-              style={styles.btnPrimary}
-              onPress={() => router.push('/(tabs)/plan')}
-            >
-              <Text style={styles.btnPrimaryText}>Ver plan semanal</Text>
-            </TouchableOpacity>
-
-            <TouchableOpacity
-              style={styles.btnSecondary}
-              onPress={() => router.push('/(tabs)/compra')}
-            >
-              <Text style={styles.btnSecondaryText}>Lista de la compra</Text>
-            </TouchableOpacity>
-
-            {/* Herramientas nativas */}
-            <View style={styles.herramientasTitulo}>
-              <Text style={styles.herramientasLabel}>Herramientas</Text>
-            </View>
-
-            <View style={styles.herramientasGrid}>
-              <TouchableOpacity
-                style={styles.herramientaCard}
-                onPress={() => router.push('/notificaciones')}
-              >
-                <Text style={styles.herramientaEmoji}>🔔</Text>
-                <Text style={styles.herramientaNombre}>Recordatorio</Text>
-                <Text style={styles.herramientaDesc}>Configura avisos de comidas</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.herramientaCard}
-                onPress={() => router.push('/pedometro')}
-              >
-                <Text style={styles.herramientaEmoji}>👣</Text>
-                <Text style={styles.herramientaNombre}>Actividad</Text>
-                <Text style={styles.herramientaDesc}>Pasos y calorías quemadas</Text>
-              </TouchableOpacity>
-
-              <TouchableOpacity
-                style={styles.herramientaCard}
-                onPress={() => router.push('/diario')}
-              >
-                <Text style={styles.herramientaEmoji}>📸</Text>
-                <Text style={styles.herramientaNombre}>Diario</Text>
-                <Text style={styles.herramientaDesc}>Fotos de tus comidas</Text>
-              </TouchableOpacity>
-            </View>
-
-            <TouchableOpacity onPress={recalcular} disabled={recalculando}>
-              <Text style={styles.recalcular}>
-                {recalculando ? 'Recalculando...' : 'Recalcular plan nutricional'}
-              </Text>
-            </TouchableOpacity>
-          </>
-        ) : (
-          <View style={styles.empty}>
-            <Text style={styles.emptyTitle}>Calcula tu plan nutricional</Text>
-            <Text style={styles.emptySubtitle}>Basado en tus datos y objetivos</Text>
-            <TouchableOpacity
-              style={styles.btnPrimary}
-              onPress={recalcular}
-              disabled={recalculando}
-            >
-              {recalculando
-                ? <ActivityIndicator color="#fff" />
-                : <Text style={styles.btnPrimaryText}>Calcular mi plan</Text>
-              }
-            </TouchableOpacity>
-          </View>
-        )}
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f8f9fa' },
+  wrapper: { flex: 1, backgroundColor: '#f8f9fa' },
+  headerBar: {
+    backgroundColor: '#fff',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingBottom: 12,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#eee',
+  },
+  headerLogo: {
+    width: 28,
+    height: 28,
+    borderRadius: 14,
+    backgroundColor: '#0F6E56',
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginRight: 8,
+  },
+  headerLogoText: {
+    color: '#fff',
+    fontSize: 13,
+    fontWeight: '700',
+  },
+  headerTitle: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#0F6E56',
+  },
+  container: { flex: 1 },
   content: { padding: 20, paddingBottom: 40 },
   header: { marginBottom: 20 },
   saludo: { fontSize: 22, fontWeight: '600', color: '#111', marginBottom: 2 },

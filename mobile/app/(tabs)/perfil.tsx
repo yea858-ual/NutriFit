@@ -34,6 +34,7 @@ const INTOLERANCIAS = [
 export default function Perfil() {
   const router = useRouter()
   const { recargarUsuario, logout } = useAuth()
+  const insets = useSafeAreaInsets()
   const [form, setForm] = useState({
     edad: '', peso_kg: '', altura_cm: '', sexo: 'hombre',
     nivel_actividad: 'moderado', objetivo: 'mantenimiento',
@@ -43,7 +44,6 @@ export default function Perfil() {
   const [cargando, setCargando] = useState(true)
   const [guardando, setGuardando] = useState(false)
   const [error, setError] = useState('')
-  const insets = useSafeAreaInsets()
 
   useEffect(() => {
     const cargar = async () => {
@@ -133,139 +133,165 @@ export default function Perfil() {
   )
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-      <ScrollView style={[styles.container, { paddingTop: insets.top }]} keyboardShouldPersistTaps="handled">
-        <View style={styles.content}>
+    <View style={styles.wrapper}>
 
-          <Text style={styles.titulo}>Mi perfil</Text>
-          <Text style={styles.subtitulo}>Actualiza tus datos para recalcular tu plan</Text>
-
-          {/* Datos físicos */}
-          <View style={styles.card}>
-            <Text style={styles.cardTitulo}>DATOS FÍSICOS</Text>
-            <View style={styles.gridTres}>
-              {[
-                { name: 'edad', label: 'Edad', placeholder: '22' },
-                { name: 'peso_kg', label: 'Peso (kg)', placeholder: '70' },
-                { name: 'altura_cm', label: 'Altura (cm)', placeholder: '175' },
-              ].map(f => (
-                <View key={f.name} style={styles.inputGroup}>
-                  <Text style={styles.inputLabel}>{f.label}</Text>
-                  <TextInput
-                    style={styles.input}
-                    value={form[f.name as keyof typeof form] as string}
-                    onChangeText={v => setForm(prev => ({ ...prev, [f.name]: v }))}
-                    placeholder={f.placeholder}
-                    placeholderTextColor="#ccc"
-                    keyboardType="numeric"
-                  />
-                </View>
-              ))}
-            </View>
-          </View>
-
-          {/* Sexo */}
-          <View style={styles.card}>
-            <Text style={styles.cardTitulo}>SEXO</Text>
-            <View style={styles.pillsRow}>
-              {['hombre', 'mujer'].map(s => (
-                <TouchableOpacity
-                  key={s}
-                  style={pillStyle(form.sexo === s)}
-                  onPress={() => setForm(prev => ({ ...prev, sexo: s }))}
-                >
-                  <Text style={pillTextStyle(form.sexo === s)}>
-                    {s.charAt(0).toUpperCase() + s.slice(1)}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-
-          {/* Objetivo */}
-          <View style={styles.card}>
-            <Text style={styles.cardTitulo}>OBJETIVO</Text>
-            <View style={styles.pillsRow}>
-              {OBJETIVOS.map(o => (
-                <TouchableOpacity
-                  key={o.valor}
-                  style={pillStyle(form.objetivo === o.valor)}
-                  onPress={() => setForm(prev => ({ ...prev, objetivo: o.valor }))}
-                >
-                  <Text style={pillTextStyle(form.objetivo === o.valor)}>{o.label}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-
-          {/* Nivel de actividad */}
-          <View style={styles.card}>
-            <Text style={styles.cardTitulo}>NIVEL DE ACTIVIDAD</Text>
-            <View style={styles.pillsRow}>
-              {ACTIVIDADES.map(a => (
-                <TouchableOpacity
-                  key={a.valor}
-                  style={pillStyle(form.nivel_actividad === a.valor)}
-                  onPress={() => setForm(prev => ({ ...prev, nivel_actividad: a.valor }))}
-                >
-                  <Text style={pillTextStyle(form.nivel_actividad === a.valor)}>{a.label}</Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-
-          {/* Intolerancias */}
-          <View style={styles.card}>
-            <Text style={styles.cardTitulo}>INTOLERANCIAS Y PREFERENCIAS</Text>
-            <View style={styles.pillsRow}>
-              {INTOLERANCIAS.map(item => (
-                <TouchableOpacity
-                  key={item.name}
-                  style={pillStyle(form[item.name as keyof typeof form] as boolean)}
-                  onPress={() => toggle(item.name)}
-                >
-                  <Text style={pillTextStyle(form[item.name as keyof typeof form] as boolean)}>
-                    {item.label}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View>
-          </View>
-
-          {error ? <Text style={styles.error}>{error}</Text> : null}
-
-          <TouchableOpacity
-            style={[styles.btnGuardar, guardando && { opacity: 0.7 }]}
-            onPress={guardar}
-            disabled={guardando}
-          >
-            {guardando
-              ? <ActivityIndicator color="#fff" />
-              : <Text style={styles.btnGuardarText}>Guardar perfil</Text>
-            }
-          </TouchableOpacity>
-
-          {/* Cerrar sesión */}
-          <TouchableOpacity style={styles.btnLogout} onPress={logout}>
-            <Text style={styles.btnLogoutText}>Cerrar sesión</Text>
-          </TouchableOpacity>
-
-          {/* Eliminar cuenta */}
-          <TouchableOpacity style={styles.btnEliminar} onPress={eliminarCuenta}>
-            <Text style={styles.btnEliminarText}>Eliminar cuenta permanentemente</Text>
-          </TouchableOpacity>
-
+      {/* Header */}
+      <View style={[styles.headerBar, { paddingTop: insets.top + 12 }]}>
+        <View style={styles.headerLogo}>
+          <Text style={styles.headerLogoText}>N</Text>
         </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+        <Text style={styles.headerTitle}>NutriFit</Text>
+      </View>
+
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <ScrollView style={styles.scroll} keyboardShouldPersistTaps="handled">
+          <View style={styles.content}>
+
+            <Text style={styles.titulo}>Mi perfil</Text>
+            <Text style={styles.subtitulo}>Actualiza tus datos para recalcular tu plan</Text>
+
+            {/* Datos físicos */}
+            <View style={styles.card}>
+              <Text style={styles.cardTitulo}>DATOS FÍSICOS</Text>
+              <View style={styles.gridTres}>
+                {[
+                  { name: 'edad', label: 'Edad', placeholder: '22' },
+                  { name: 'peso_kg', label: 'Peso (kg)', placeholder: '70' },
+                  { name: 'altura_cm', label: 'Altura (cm)', placeholder: '175' },
+                ].map(f => (
+                  <View key={f.name} style={styles.inputGroup}>
+                    <Text style={styles.inputLabel}>{f.label}</Text>
+                    <TextInput
+                      style={styles.input}
+                      value={form[f.name as keyof typeof form] as string}
+                      onChangeText={v => setForm(prev => ({ ...prev, [f.name]: v }))}
+                      placeholder={f.placeholder}
+                      placeholderTextColor="#ccc"
+                      keyboardType="numeric"
+                    />
+                  </View>
+                ))}
+              </View>
+            </View>
+
+            {/* Sexo */}
+            <View style={styles.card}>
+              <Text style={styles.cardTitulo}>SEXO</Text>
+              <View style={styles.pillsRow}>
+                {['hombre', 'mujer'].map(s => (
+                  <TouchableOpacity
+                    key={s}
+                    style={pillStyle(form.sexo === s)}
+                    onPress={() => setForm(prev => ({ ...prev, sexo: s }))}
+                  >
+                    <Text style={pillTextStyle(form.sexo === s)}>
+                      {s.charAt(0).toUpperCase() + s.slice(1)}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+
+            {/* Objetivo */}
+            <View style={styles.card}>
+              <Text style={styles.cardTitulo}>OBJETIVO</Text>
+              <View style={styles.pillsRow}>
+                {OBJETIVOS.map(o => (
+                  <TouchableOpacity
+                    key={o.valor}
+                    style={pillStyle(form.objetivo === o.valor)}
+                    onPress={() => setForm(prev => ({ ...prev, objetivo: o.valor }))}
+                  >
+                    <Text style={pillTextStyle(form.objetivo === o.valor)}>{o.label}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+
+            {/* Nivel de actividad */}
+            <View style={styles.card}>
+              <Text style={styles.cardTitulo}>NIVEL DE ACTIVIDAD</Text>
+              <View style={styles.pillsRow}>
+                {ACTIVIDADES.map(a => (
+                  <TouchableOpacity
+                    key={a.valor}
+                    style={pillStyle(form.nivel_actividad === a.valor)}
+                    onPress={() => setForm(prev => ({ ...prev, nivel_actividad: a.valor }))}
+                  >
+                    <Text style={pillTextStyle(form.nivel_actividad === a.valor)}>{a.label}</Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+
+            {/* Intolerancias */}
+            <View style={styles.card}>
+              <Text style={styles.cardTitulo}>INTOLERANCIAS Y PREFERENCIAS</Text>
+              <View style={styles.pillsRow}>
+                {INTOLERANCIAS.map(item => (
+                  <TouchableOpacity
+                    key={item.name}
+                    style={pillStyle(form[item.name as keyof typeof form] as boolean)}
+                    onPress={() => toggle(item.name)}
+                  >
+                    <Text style={pillTextStyle(form[item.name as keyof typeof form] as boolean)}>
+                      {item.label}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+            </View>
+
+            {error ? <Text style={styles.error}>{error}</Text> : null}
+
+            <TouchableOpacity
+              style={[styles.btnGuardar, guardando && { opacity: 0.7 }]}
+              onPress={guardar}
+              disabled={guardando}
+            >
+              {guardando
+                ? <ActivityIndicator color="#fff" />
+                : <Text style={styles.btnGuardarText}>Guardar perfil</Text>
+              }
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.btnLogout} onPress={logout}>
+              <Text style={styles.btnLogoutText}>Cerrar sesión</Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.btnEliminar} onPress={eliminarCuenta}>
+              <Text style={styles.btnEliminarText}>Eliminar cuenta permanentemente</Text>
+            </TouchableOpacity>
+
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f8f9fa' },
+  wrapper: { flex: 1, backgroundColor: '#f8f9fa' },
+  headerBar: {
+    backgroundColor: '#fff',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingBottom: 12,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#eee',
+  },
+  headerLogo: {
+    width: 28, height: 28, borderRadius: 14,
+    backgroundColor: '#0F6E56',
+    alignItems: 'center', justifyContent: 'center', marginRight: 8,
+  },
+  headerLogoText: { color: '#fff', fontSize: 13, fontWeight: '700' },
+  headerTitle: { fontSize: 16, fontWeight: '600', color: '#0F6E56' },
+  container: { flex: 1 },
   scroll: { flex: 1 },
   content: { padding: 20, paddingBottom: 40 },
   center: { flex: 1, justifyContent: 'center', alignItems: 'center' },

@@ -65,113 +65,138 @@ export default function PlanSemanal() {
   const diaData = plan?.dias[diaActivo]
 
   return (
-    <ScrollView
-      style={[styles.container, { paddingTop: insets.top }]}
-      refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#0F6E56" />}
-    >
-      <View style={styles.content}>
+    <View style={styles.wrapper}>
 
-        {/* Cabecera */}
-        <View style={styles.header}>
-          <View>
-            <Text style={styles.titulo}>Plan semanal</Text>
-            {plan && (
-              <Text style={styles.subtitulo}>
-                {plan.total_alimentos_distintos} alimentos distintos esta semana
-              </Text>
-            )}
-          </View>
-          <TouchableOpacity
-            style={styles.btnRegenerar}
-            onPress={regenerar}
-            disabled={generando}
-          >
-            {generando
-              ? <ActivityIndicator size="small" color="#555" />
-              : <Text style={styles.btnRegenerarText}>Regenerar</Text>
-            }
-          </TouchableOpacity>
+      {/* Header */}
+      <View style={[styles.headerBar, { paddingTop: insets.top + 12 }]}>
+        <View style={styles.headerLogo}>
+          <Text style={styles.headerLogoText}>N</Text>
         </View>
+        <Text style={styles.headerTitle}>NutriFit</Text>
+      </View>
 
-        {error && (
-          <View style={styles.empty}>
-            <Text style={styles.emptyText}>{error}</Text>
-            <TouchableOpacity style={styles.btnGenerar} onPress={regenerar} disabled={generando}>
+      <ScrollView
+        style={styles.container}
+        refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} tintColor="#0F6E56" />}
+      >
+        <View style={styles.content}>
+
+          {/* Cabecera */}
+          <View style={styles.header}>
+            <View>
+              <Text style={styles.titulo}>Plan semanal</Text>
+              {plan && (
+                <Text style={styles.subtitulo}>
+                  {plan.total_alimentos_distintos} alimentos distintos esta semana
+                </Text>
+              )}
+            </View>
+            <TouchableOpacity
+              style={styles.btnRegenerar}
+              onPress={regenerar}
+              disabled={generando}
+            >
               {generando
-                ? <ActivityIndicator color="#fff" />
-                : <Text style={styles.btnGenerarText}>Generar plan semanal</Text>
+                ? <ActivityIndicator size="small" color="#555" />
+                : <Text style={styles.btnRegenerarText}>Regenerar</Text>
               }
             </TouchableOpacity>
           </View>
-        )}
 
-        {plan && (
-          <>
-            {/* Tabs días */}
-            <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tabsContainer}>
-              {DIAS.map((dia, i) => (
-                <TouchableOpacity
-                  key={dia}
-                  style={[styles.tab, diaActivo === i && styles.tabActivo]}
-                  onPress={() => setDiaActivo(i)}
-                >
-                  <Text style={[styles.tabText, diaActivo === i && styles.tabTextActivo]}>
-                    {dia}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
+          {error && (
+            <View style={styles.empty}>
+              <Text style={styles.emptyText}>{error}</Text>
+              <TouchableOpacity style={styles.btnGenerar} onPress={regenerar} disabled={generando}>
+                {generando
+                  ? <ActivityIndicator color="#fff" />
+                  : <Text style={styles.btnGenerarText}>Generar plan semanal</Text>
+                }
+              </TouchableOpacity>
+            </View>
+          )}
 
-            {diaData && (
-              <>
-                {/* Nombre del día */}
-                <Text style={styles.diaNombre}>{DIAS_COMPLETOS[diaActivo]}</Text>
+          {plan && (
+            <>
+              {/* Tabs días */}
+              <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.tabsContainer}>
+                {DIAS.map((dia, i) => (
+                  <TouchableOpacity
+                    key={dia}
+                    style={[styles.tab, diaActivo === i && styles.tabActivo]}
+                    onPress={() => setDiaActivo(i)}
+                  >
+                    <Text style={[styles.tabText, diaActivo === i && styles.tabTextActivo]}>
+                      {dia}
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </ScrollView>
 
-                {/* Totales del día */}
-                <View style={styles.totalesGrid}>
-                  {[
-                    { label: 'kcal', valor: Math.round(diaData.totales.kcal) },
-                    { label: 'proteínas', valor: `${Math.round(diaData.totales.proteinas_g)}g` },
-                    { label: 'carbos', valor: `${Math.round(diaData.totales.carbohidratos_g)}g` },
-                    { label: 'grasas', valor: `${Math.round(diaData.totales.grasas_g)}g` },
-                  ].map(t => (
-                    <View key={t.label} style={styles.totalCard}>
-                      <Text style={styles.totalLabel}>{t.label}</Text>
-                      <Text style={styles.totalValor}>{t.valor}</Text>
-                    </View>
-                  ))}
-                </View>
+              {diaData && (
+                <>
+                  <Text style={styles.diaNombre}>{DIAS_COMPLETOS[diaActivo]}</Text>
 
-                {/* Comidas */}
-                {diaData.comidas.map((comida: any) => (
-                  <View key={comida.tipo} style={styles.comidaCard}>
-                    <View style={styles.comidaHeader}>
-                      <Text style={styles.comidaTipo}>
-                        {comida.tipo.charAt(0).toUpperCase() + comida.tipo.slice(1)}
-                      </Text>
-                      <Text style={styles.comidaKcal}>{Math.round(comida.kcal_total)} kcal</Text>
-                    </View>
-                    {comida.alimentos.map((a: any) => (
-                      <View key={a.alimento_id} style={styles.alimentoRow}>
-                        <Text style={styles.alimentoNombre}>{a.nombre}</Text>
-                        <View style={styles.alimentoGramosBadge}>
-                          <Text style={styles.alimentoGramosText}>{a.cantidad_g}g</Text>
-                        </View>
+                  <View style={styles.totalesGrid}>
+                    {[
+                      { label: 'kcal', valor: Math.round(diaData.totales.kcal) },
+                      { label: 'proteínas', valor: `${Math.round(diaData.totales.proteinas_g)}g` },
+                      { label: 'carbos', valor: `${Math.round(diaData.totales.carbohidratos_g)}g` },
+                      { label: 'grasas', valor: `${Math.round(diaData.totales.grasas_g)}g` },
+                    ].map(t => (
+                      <View key={t.label} style={styles.totalCard}>
+                        <Text style={styles.totalLabel}>{t.label}</Text>
+                        <Text style={styles.totalValor}>{t.valor}</Text>
                       </View>
                     ))}
                   </View>
-                ))}
-              </>
-            )}
-          </>
-        )}
-      </View>
-    </ScrollView>
+
+                  {diaData.comidas.map((comida: any) => (
+                    <View key={comida.tipo} style={styles.comidaCard}>
+                      <View style={styles.comidaHeader}>
+                        <Text style={styles.comidaTipo}>
+                          {comida.tipo.charAt(0).toUpperCase() + comida.tipo.slice(1)}
+                        </Text>
+                        <Text style={styles.comidaKcal}>{Math.round(comida.kcal_total)} kcal</Text>
+                      </View>
+                      {comida.alimentos.map((a: any) => (
+                        <View key={a.alimento_id} style={styles.alimentoRow}>
+                          <Text style={styles.alimentoNombre}>{a.nombre}</Text>
+                          <View style={styles.alimentoGramosBadge}>
+                            <Text style={styles.alimentoGramosText}>{a.cantidad_g}g</Text>
+                          </View>
+                        </View>
+                      ))}
+                    </View>
+                  ))}
+                </>
+              )}
+            </>
+          )}
+        </View>
+      </ScrollView>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f8f9fa' },
+  wrapper: { flex: 1, backgroundColor: '#f8f9fa' },
+  headerBar: {
+    backgroundColor: '#fff',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingBottom: 12,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#eee',
+  },
+  headerLogo: {
+    width: 28, height: 28, borderRadius: 14,
+    backgroundColor: '#0F6E56',
+    alignItems: 'center', justifyContent: 'center', marginRight: 8,
+  },
+  headerLogoText: { color: '#fff', fontSize: 13, fontWeight: '700' },
+  headerTitle: { fontSize: 16, fontWeight: '600', color: '#0F6E56' },
+  container: { flex: 1 },
   content: { padding: 20, paddingBottom: 40 },
   center: { flex: 1, justifyContent: 'center', alignItems: 'center' },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 },

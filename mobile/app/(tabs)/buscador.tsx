@@ -122,171 +122,199 @@ export default function Buscador() {
   }
 
   return (
-    <KeyboardAvoidingView
-      style={styles.container}
-      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-    >
-      <ScrollView style={[styles.scroll, { paddingTop: insets.top }]} keyboardShouldPersistTaps="handled">
-        <View style={styles.content}>
+    <View style={styles.wrapper}>
 
-          <Text style={styles.titulo}>Buscador</Text>
-          <Text style={styles.subtitulo}>Busca alimentos y calcula sus macros</Text>
+      {/* Header */}
+      <View style={[styles.headerBar, { paddingTop: insets.top + 12 }]}>
+        <View style={styles.headerLogo}>
+          <Text style={styles.headerLogoText}>N</Text>
+        </View>
+        <Text style={styles.headerTitle}>NutriFit</Text>
+      </View>
 
-          {/* Barra de búsqueda */}
-          <View style={styles.searchRow}>
-            <TextInput
-              style={styles.input}
-              value={query}
-              onChangeText={setQuery}
-              onSubmitEditing={buscar}
-              placeholder="Buscar alimento... ej: pollo, arroz"
-              placeholderTextColor="#aaa"
-              returnKeyType="search"
-            />
-            <TouchableOpacity style={styles.btnBuscar} onPress={buscar} disabled={cargando}>
-              <Text style={styles.btnBuscarText}>{cargando ? '...' : 'Buscar'}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={styles.btnScanner} onPress={abrirEscaner}>
-              <Text style={styles.btnScannerText}>📷</Text>
-            </TouchableOpacity>
-          </View>
+      <KeyboardAvoidingView
+        style={styles.container}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      >
+        <ScrollView style={styles.scroll} keyboardShouldPersistTaps="handled">
+          <View style={styles.content}>
 
-          {/* Resultados */}
-          {!seleccionado && haBuscado && (
-            <>
-              {resultados.length > 0 && (
-                <View style={styles.seccion}>
-                  <Text style={styles.seccionTitulo}>Base de datos NutriFit ({resultados.length})</Text>
-                  <View style={styles.lista}>
-                    {resultados.map((a: any) => (
-                      <TouchableOpacity
-                        key={a.id}
-                        style={styles.itemRow}
-                        onPress={() => { setSeleccionado({ ...a, fuente: 'local' }); setGramos('100') }}
-                      >
-                        <View style={styles.localBadge}>
-                          <Text style={styles.localBadgeText}>LOCAL</Text>
-                        </View>
-                        <View style={styles.itemInfo}>
-                          <Text style={styles.itemNombre}>{a.nombre}</Text>
-                          <Text style={styles.itemCategoria}>{a.categoria}</Text>
-                        </View>
-                        <Text style={styles.itemKcal}>{a.kcal_100g} kcal/100g</Text>
-                      </TouchableOpacity>
-                    ))}
-                  </View>
-                </View>
-              )}
+            <Text style={styles.titulo}>Buscador</Text>
+            <Text style={styles.subtitulo}>Busca alimentos y calcula sus macros</Text>
 
-              {cargandoOFF && (
-                <Text style={styles.buscandoOFF}>Buscando en OpenFoodFacts...</Text>
-              )}
-
-              {!cargandoOFF && resultadosOFF.length > 0 && (
-                <View style={styles.seccion}>
-                  <Text style={[styles.seccionTitulo, { color: '#4F46E5' }]}>
-                    OpenFoodFacts ({resultadosOFF.length})
-                  </Text>
-                  <View style={styles.lista}>
-                    {resultadosOFF.map((a: any, idx: number) => (
-                      <TouchableOpacity
-                        key={idx}
-                        style={styles.itemRow}
-                        onPress={() => { setSeleccionado({ ...a, fuente: 'off' }); setGramos('100') }}
-                      >
-                        {a.imagen_url ? (
-                          <Image source={{ uri: a.imagen_url }} style={styles.productImage} />
-                        ) : (
-                          <View style={styles.offBadge}>
-                            <Text style={styles.offBadgeText}>OFF</Text>
-                          </View>
-                        )}
-                        <View style={styles.itemInfo}>
-                          <Text style={styles.itemNombre}>{a.nombre}</Text>
-                          <Text style={styles.itemCategoria}>{a.marca || 'OpenFoodFacts'}</Text>
-                        </View>
-                        <Text style={[styles.itemKcal, { color: '#4F46E5' }]}>
-                          {a.kcal_100g} kcal/100g
-                        </Text>
-                      </TouchableOpacity>
-                    ))}
-                  </View>
-                </View>
-              )}
-
-              {!cargando && !cargandoOFF && resultados.length === 0 && resultadosOFF.length === 0 && (
-                <Text style={styles.sinResultados}>No se encontraron resultados para "{query}"</Text>
-              )}
-            </>
-          )}
-
-          {/* Calculadora de macros */}
-          {seleccionado && (
-            <View style={styles.calculadora}>
-              <TouchableOpacity onPress={() => setSeleccionado(null)} style={styles.btnVolver}>
-                <Text style={styles.btnVolverText}>← Volver</Text>
+            {/* Barra de búsqueda */}
+            <View style={styles.searchRow}>
+              <TextInput
+                style={styles.input}
+                value={query}
+                onChangeText={setQuery}
+                onSubmitEditing={buscar}
+                placeholder="Buscar alimento... ej: pollo, arroz"
+                placeholderTextColor="#aaa"
+                returnKeyType="search"
+              />
+              <TouchableOpacity style={styles.btnBuscar} onPress={buscar} disabled={cargando}>
+                <Text style={styles.btnBuscarText}>{cargando ? '...' : 'Buscar'}</Text>
               </TouchableOpacity>
+              <TouchableOpacity style={styles.btnScanner} onPress={abrirEscaner}>
+                <Text style={styles.btnScannerText}>📷</Text>
+              </TouchableOpacity>
+            </View>
 
-              <View style={styles.calcCard}>
-                <View style={styles.calcHeader}>
-                  {seleccionado.fuente === 'off' && seleccionado.imagen_url ? (
-                    <Image source={{ uri: seleccionado.imagen_url }} style={styles.calcImage} />
-                  ) : seleccionado.fuente === 'local' ? (
-                    <View style={styles.localBadge}>
-                      <Text style={styles.localBadgeText}>LOCAL</Text>
+            {/* Resultados */}
+            {!seleccionado && haBuscado && (
+              <>
+                {resultados.length > 0 && (
+                  <View style={styles.seccion}>
+                    <Text style={styles.seccionTitulo}>Base de datos NutriFit ({resultados.length})</Text>
+                    <View style={styles.lista}>
+                      {resultados.map((a: any) => (
+                        <TouchableOpacity
+                          key={a.id}
+                          style={styles.itemRow}
+                          onPress={() => { setSeleccionado({ ...a, fuente: 'local' }); setGramos('100') }}
+                        >
+                          <View style={styles.localBadge}>
+                            <Text style={styles.localBadgeText}>LOCAL</Text>
+                          </View>
+                          <View style={styles.itemInfo}>
+                            <Text style={styles.itemNombre}>{a.nombre}</Text>
+                            <Text style={styles.itemCategoria}>{a.categoria}</Text>
+                          </View>
+                          <Text style={styles.itemKcal}>{a.kcal_100g} kcal/100g</Text>
+                        </TouchableOpacity>
+                      ))}
                     </View>
-                  ) : (
-                    <View style={styles.offBadge}>
-                      <Text style={styles.offBadgeText}>OFF</Text>
-                    </View>
-                  )}
-                  <View style={{ flex: 1 }}>
-                    <Text style={styles.calcNombre}>{seleccionado.nombre}</Text>
-                    <Text style={styles.calcCategoria}>
-                      {seleccionado.fuente === 'local' ? seleccionado.categoria : seleccionado.marca || 'OpenFoodFacts'}
-                    </Text>
                   </View>
-                </View>
+                )}
 
-                <View style={styles.gramosRow}>
-                  <Text style={styles.gramosLabel}>Cantidad (g)</Text>
-                  <TextInput
-                    style={styles.gramosInput}
-                    value={gramos}
-                    onChangeText={setGramos}
-                    keyboardType="numeric"
-                  />
-                </View>
+                {cargandoOFF && (
+                  <Text style={styles.buscandoOFF}>Buscando en OpenFoodFacts...</Text>
+                )}
 
-                <View style={styles.macrosGrid}>
-                  {(() => {
-                    const m = calcular(seleccionado)
-                    return [
-                      { label: 'Calorías', valor: m.kcal, unit: 'kcal', color: '#0F6E56' },
-                      { label: 'Proteínas', valor: m.proteinas, unit: 'g', color: '#185FA5' },
-                      { label: 'Carbos', valor: m.carbohidratos, unit: 'g', color: '#BA7517' },
-                      { label: 'Grasas', valor: m.grasas, unit: 'g', color: '#444' },
-                    ].map(d => (
-                      <View key={d.label} style={styles.macroCard}>
-                        <Text style={styles.macroLabel}>{d.label}</Text>
-                        <Text style={[styles.macroValor, { color: d.color }]}>
-                          {d.valor}<Text style={styles.macroUnit}>{d.unit}</Text>
-                        </Text>
+                {!cargandoOFF && resultadosOFF.length > 0 && (
+                  <View style={styles.seccion}>
+                    <Text style={[styles.seccionTitulo, { color: '#4F46E5' }]}>
+                      OpenFoodFacts ({resultadosOFF.length})
+                    </Text>
+                    <View style={styles.lista}>
+                      {resultadosOFF.map((a: any, idx: number) => (
+                        <TouchableOpacity
+                          key={idx}
+                          style={styles.itemRow}
+                          onPress={() => { setSeleccionado({ ...a, fuente: 'off' }); setGramos('100') }}
+                        >
+                          {a.imagen_url ? (
+                            <Image source={{ uri: a.imagen_url }} style={styles.productImage} />
+                          ) : (
+                            <View style={styles.offBadge}>
+                              <Text style={styles.offBadgeText}>OFF</Text>
+                            </View>
+                          )}
+                          <View style={styles.itemInfo}>
+                            <Text style={styles.itemNombre}>{a.nombre}</Text>
+                            <Text style={styles.itemCategoria}>{a.marca || 'OpenFoodFacts'}</Text>
+                          </View>
+                          <Text style={[styles.itemKcal, { color: '#4F46E5' }]}>
+                            {a.kcal_100g} kcal/100g
+                          </Text>
+                        </TouchableOpacity>
+                      ))}
+                    </View>
+                  </View>
+                )}
+
+                {!cargando && !cargandoOFF && resultados.length === 0 && resultadosOFF.length === 0 && (
+                  <Text style={styles.sinResultados}>No se encontraron resultados para "{query}"</Text>
+                )}
+              </>
+            )}
+
+            {/* Calculadora de macros */}
+            {seleccionado && (
+              <View style={styles.calculadora}>
+                <TouchableOpacity onPress={() => setSeleccionado(null)} style={styles.btnVolver}>
+                  <Text style={styles.btnVolverText}>← Volver</Text>
+                </TouchableOpacity>
+
+                <View style={styles.calcCard}>
+                  <View style={styles.calcHeader}>
+                    {seleccionado.fuente === 'off' && seleccionado.imagen_url ? (
+                      <Image source={{ uri: seleccionado.imagen_url }} style={styles.calcImage} />
+                    ) : seleccionado.fuente === 'local' ? (
+                      <View style={styles.localBadge}>
+                        <Text style={styles.localBadgeText}>LOCAL</Text>
                       </View>
-                    ))
-                  })()}
+                    ) : (
+                      <View style={styles.offBadge}>
+                        <Text style={styles.offBadgeText}>OFF</Text>
+                      </View>
+                    )}
+                    <View style={{ flex: 1 }}>
+                      <Text style={styles.calcNombre}>{seleccionado.nombre}</Text>
+                      <Text style={styles.calcCategoria}>
+                        {seleccionado.fuente === 'local' ? seleccionado.categoria : seleccionado.marca || 'OpenFoodFacts'}
+                      </Text>
+                    </View>
+                  </View>
+
+                  <View style={styles.gramosRow}>
+                    <Text style={styles.gramosLabel}>Cantidad (g)</Text>
+                    <TextInput
+                      style={styles.gramosInput}
+                      value={gramos}
+                      onChangeText={setGramos}
+                      keyboardType="numeric"
+                    />
+                  </View>
+
+                  <View style={styles.macrosGrid}>
+                    {(() => {
+                      const m = calcular(seleccionado)
+                      return [
+                        { label: 'Calorías', valor: m.kcal, unit: 'kcal', color: '#0F6E56' },
+                        { label: 'Proteínas', valor: m.proteinas, unit: 'g', color: '#185FA5' },
+                        { label: 'Carbos', valor: m.carbohidratos, unit: 'g', color: '#BA7517' },
+                        { label: 'Grasas', valor: m.grasas, unit: 'g', color: '#444' },
+                      ].map(d => (
+                        <View key={d.label} style={styles.macroCard}>
+                          <Text style={styles.macroLabel}>{d.label}</Text>
+                          <Text style={[styles.macroValor, { color: d.color }]}>
+                            {d.valor}<Text style={styles.macroUnit}>{d.unit}</Text>
+                          </Text>
+                        </View>
+                      ))
+                    })()}
+                  </View>
                 </View>
               </View>
-            </View>
-          )}
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+            )}
+          </View>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </View>
   )
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#f8f9fa' },
+  wrapper: { flex: 1, backgroundColor: '#f8f9fa' },
+  headerBar: {
+    backgroundColor: '#fff',
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingBottom: 12,
+    borderBottomWidth: 0.5,
+    borderBottomColor: '#eee',
+  },
+  headerLogo: {
+    width: 28, height: 28, borderRadius: 14,
+    backgroundColor: '#0F6E56',
+    alignItems: 'center', justifyContent: 'center', marginRight: 8,
+  },
+  headerLogoText: { color: '#fff', fontSize: 13, fontWeight: '700' },
+  headerTitle: { fontSize: 16, fontWeight: '600', color: '#0F6E56' },
+  container: { flex: 1 },
   scroll: { flex: 1 },
   content: { padding: 20, paddingBottom: 40 },
   titulo: { fontSize: 22, fontWeight: '600', color: '#111', marginBottom: 2 },
