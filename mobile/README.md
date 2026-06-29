@@ -1,50 +1,87 @@
-# Welcome to your Expo app 👋
+# NutriFit Mobile
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+App móvil de NutriFit para iOS y Android desarrollada con React Native y Expo. Complemento del Trabajo Fin de Grado (CTFG) en Ingeniería Informática en la Universidad de Almería.
 
-## Get started
+Consume la misma API REST del backend de NutriFit sin necesidad de un backend adicional.
 
-1. Install dependencies
+## Tecnologías
 
-   ```bash
-   npm install
-   ```
+- **React Native** + Expo SDK 54
+- **expo-router** (navegación basada en archivos)
+- **AsyncStorage** (persistencia local)
+- **expo-camera** (escáner de código de barras)
+- **expo-notifications** (notificaciones locales)
+- **expo-sensors** (pedómetro)
+- **expo-image-picker** (diario visual de comidas)
 
-2. Start the app
+## Estructura del proyecto
 
-   ```bash
-   npx expo start
-   ```
-
-In the output, you'll find options to open the app in a
-
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+mobile/
+├── app/
+│   ├── _layout.tsx          ← Layout principal con autenticación
+│   ├── index.tsx            ← Redirección inicial
+│   ├── (auth)/
+│   │   ├── login.tsx
+│   │   └── register.tsx
+│   ├── (tabs)/
+│   │   ├── dashboard.tsx    ← Inicio con resumen nutricional
+│   │   ├── plan.tsx         ← Plan semanal
+│   │   ├── compra.tsx       ← Lista de la compra offline
+│   │   ├── buscador.tsx     ← Buscador + escáner de código de barras
+│   │   └── perfil.tsx       ← Perfil e intolerancias
+│   ├── notificaciones/
+│   │   └── index.tsx        ← Recordatorios diarios configurables
+│   ├── pedometro/
+│   │   └── index.tsx        ← Contador de pasos y calorías quemadas
+│   └── diario/
+│       └── index.tsx        ← Diario visual de comidas
+├── api/
+│   └── http.ts              ← Axios con interceptor JWT
+└── context/
+    └── AuthContext.tsx      ← Gestión de token con AsyncStorage
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Instalación
 
-## Learn more
+### 1. Clonar el repositorio
 
-To learn more about developing your project with Expo, look at the following resources:
+```bash
+git clone https://github.com/yea858-ual/NutriFit.git
+cd NutriFit/mobile
+```
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+### 2. Instalar dependencias
 
-## Join the community
+```bash
+npm install
+```
 
-Join our community of developers creating universal apps.
+### 3. Configurar la IP del backend
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Abre `api/http.ts` y cambia la `baseURL` por la IP de tu ordenador en la red local:
+
+```ts
+baseURL: 'http://TU_IP_LOCAL:8000',
+```
+
+### 4. Arrancar Expo
+
+```bash
+npx expo start
+```
+
+Escanea el QR con la app **Expo Go** desde tu iPhone o Android.
+
+> Asegúrate de que el backend está corriendo con `uvicorn main:app --reload --host 0.0.0.0` y de que el móvil y el ordenador están en la misma red WiFi.
+
+## Funcionalidades nativas
+
+| Funcionalidad | Librería | Descripción |
+|---------------|----------|-------------|
+| Escáner código de barras | expo-camera | Escanea productos y consulta sus macros en OpenFoodFacts |
+| Notificaciones locales | expo-notifications | Recordatorios diarios de comidas e hidratación |
+| Pedómetro | expo-sensors | Pasos del día y calorías quemadas via Apple HealthKit |
+| Diario visual | expo-image-picker | Fotografía tus comidas y guárdalas por día |
+| Compartir lista | Share (React Native) | Envía la lista de la compra por WhatsApp u otras apps |
+| Acceso offline | AsyncStorage | Lista de la compra y buscador disponibles sin conexión |
