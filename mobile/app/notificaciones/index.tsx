@@ -1,4 +1,3 @@
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useState, useEffect } from 'react'
 import {
   View, Text, StyleSheet, ScrollView,
@@ -7,6 +6,8 @@ import {
 import * as Notifications from 'expo-notifications'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useRouter } from 'expo-router'
+import DateTimePicker from '@react-native-community/datetimepicker'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 
 const STORAGE_KEY = 'nutrifit_notificaciones'
 
@@ -26,6 +27,7 @@ const RECORDATORIOS_DEFAULT = [
   { id: 'cena', label: 'Cena', titulo: '¡Es hora de cenar!', hora: '21:00', activo: true, emoji: '🌙' },
   { id: 'hidratacion1', label: 'Hidratación (mañana)', titulo: '¡Recuerda hidratarte!', hora: '10:00', activo: false, emoji: '💧' },
   { id: 'hidratacion2', label: 'Hidratación (tarde)', titulo: '¡Recuerda hidratarte!', hora: '17:00', activo: false, emoji: '💧' },
+  { id: 'gym', label: 'Ir al gimnasio', titulo: '¡Es hora de entrenar!', hora: '18:00', activo: false, emoji: '🏋️' },
 ]
 
 export default function Notificaciones() {
@@ -33,12 +35,13 @@ export default function Notificaciones() {
   const insets = useSafeAreaInsets()
   const [recordatorios, setRecordatorios] = useState(RECORDATORIOS_DEFAULT)
   const [permiso, setPermiso] = useState(false)
+  const [pickerVisible, setPickerVisible] = useState<string | null>(null)
+  const [horaTemp, setHoraTemp] = useState<string | null>(null)
 
   useEffect(() => {
     const init = async () => {
       const { status } = await Notifications.requestPermissionsAsync()
       setPermiso(status === 'granted')
-
       const guardados = await AsyncStorage.getItem(STORAGE_KEY)
       if (guardados) setRecordatorios(JSON.parse(guardados))
     }
@@ -58,13 +61,31 @@ export default function Notificaciones() {
     guardar(nuevos)
   }
 
+  const abrirPicker = (id: string, horaActual: string) => {
+    setHoraTemp(horaActual)
+    setPickerVisible(id)
+  }
+
+  const confirmarHora = (id: string) => {
+    if (!horaTemp) return
+    const nuevos = recordatorios.map(r =>
+      r.id === id ? { ...r, hora: horaTemp } : r
+    )
+    guardar(nuevos)
+    setPickerVisible(null)
+    setHoraTemp(null)
+  }
+
+  const cancelarPicker = () => {
+    setPickerVisible(null)
+    setHoraTemp(null)
+  }
+
   const programarNotificaciones = async (lista: typeof recordatorios) => {
     await Notifications.cancelAllScheduledNotificationsAsync()
-
     for (const r of lista) {
       if (!r.activo) continue
       const [hora, minuto] = r.hora.split(':').map(Number)
-
       await Notifications.scheduleNotificationAsync({
         content: {
           title: `${r.emoji} ${r.titulo}`,
@@ -77,8 +98,14 @@ export default function Notificaciones() {
         },
       })
     }
-
     Alert.alert('✅ Guardado', 'Los recordatorios se han configurado correctamente.')
+  }
+
+  const horaToDate = (hora: string) => {
+    const [h, m] = hora.split(':').map(Number)
+    const d = new Date()
+    d.setHours(h, m, 0, 0)
+    return d
   }
 
   return (
@@ -91,7 +118,7 @@ export default function Notificaciones() {
 
         <Text style={styles.titulo}>Recordatorios</Text>
         <Text style={styles.subtitulo}>
-          Activa los recordatorios para no olvidar ninguna comida del día
+          Activa y personaliza los recordatorios de cada comida
         </Text>
 
         {!permiso && (
@@ -104,21 +131,48 @@ export default function Notificaciones() {
 
         <View style={styles.card}>
           {recordatorios.map((r, idx) => (
-            <View
-              key={r.id}
-              style={[styles.itemRow, idx < recordatorios.length - 1 && styles.itemBorder]}
-            >
-              <Text style={styles.itemEmoji}>{r.emoji}</Text>
-              <View style={styles.itemInfo}>
-                <Text style={styles.itemLabel}>{r.label}</Text>
-                <Text style={styles.itemHora}>{r.hora}</Text>
+            <View key={r.id}>
+              <View style={[styles.itemRow, idx < recordatorios.length - 1 && !pickerVisible ? styles.itemBorder : null]}>
+                <Text style={styles.itemEmoji}>{r.emoji}</Text>
+                <View style={styles.itemInfo}>
+                  <Text style={styles.itemLabel}>{r.label}</Text>
+                  <TouchableOpacity onPress={() => abrirPicker(r.id, r.hora)}>
+                    <Text style={styles.itemHora}>{r.hora} · Toca para cambiar</Text>
+                  </TouchableOpacity>
+                </View>
+                <Switch
+                  value={r.activo}
+                  onValueChange={() => toggleRecordatorio(r.id)}
+                  trackColor={{ false: '#ddd', true: '#0F6E56' }}
+                  thumbColor="#fff"
+                />
               </View>
-              <Switch
-                value={r.activo}
-                onValueChange={() => toggleRecordatorio(r.id)}
-                trackColor={{ false: '#ddd', true: '#0F6E56' }}
-                thumbColor="#fff"
-              />
+
+              {pickerVisible === r.id && (
+                <View style={styles.pickerContainer}>
+                  <DateTimePicker
+                    value={horaToDate(horaTemp || r.hora)}
+                    mode="time"
+                    display="spinner"
+                    locale="es-ES"
+                    onChange={(event, fecha) => {
+                      if (fecha) {
+                        const h = fecha.getHours().toString().padStart(2, '0')
+                        const m = fecha.getMinutes().toString().padStart(2, '0')
+                        setHoraTemp(`${h}:${m}`)
+                      }
+                    }}
+                  />
+                  <View style={styles.pickerBtns}>
+                    <TouchableOpacity onPress={cancelarPicker} style={styles.btnCancelar}>
+                      <Text style={styles.btnCancelarText}>Cancelar</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress={() => confirmarHora(r.id)} style={styles.btnConfirmar}>
+                      <Text style={styles.btnConfirmarText}>Guardar</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              )}
             </View>
           ))}
         </View>
@@ -153,6 +207,18 @@ const styles = StyleSheet.create({
   itemEmoji: { fontSize: 20, marginRight: 12 },
   itemInfo: { flex: 1 },
   itemLabel: { fontSize: 14, fontWeight: '500', color: '#111' },
-  itemHora: { fontSize: 12, color: '#888', marginTop: 2 },
+  itemHora: { fontSize: 12, color: '#0F6E56', marginTop: 2 },
+  pickerContainer: {
+    backgroundColor: '#f8f9fa', borderTopWidth: 0.5, borderTopColor: '#eee',
+  },
+  pickerBtns: {
+    flexDirection: 'row', justifyContent: 'space-between',
+    paddingHorizontal: 20, paddingVertical: 12,
+    borderTopWidth: 0.5, borderTopColor: '#eee',
+  },
+  btnCancelar: { padding: 8 },
+  btnCancelarText: { fontSize: 14, color: '#888' },
+  btnConfirmar: { padding: 8 },
+  btnConfirmarText: { fontSize: 14, color: '#0F6E56', fontWeight: '600' },
   nota: { fontSize: 12, color: '#aaa', textAlign: 'center', lineHeight: 18 },
 })
